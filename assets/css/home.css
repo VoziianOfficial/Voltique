@@ -881,3 +881,338 @@
         border-radius: 22px;
     }
 }
+
+/* ==============================
+   Electrical Decision Route — Separated Cards
+============================== */
+
+.power-route {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 8% 20%, rgba(246, 247, 126, 0.12), transparent 28%),
+        radial-gradient(circle at 92% 70%, rgba(93, 142, 58, 0.16), transparent 30%),
+        var(--color-black);
+}
+
+.power-route__layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);
+    gap: clamp(30px, 5vw, 74px);
+    align-items: center;
+}
+
+.power-route__head {
+    max-width: 430px;
+}
+
+.power-route__head h2 {
+    margin-bottom: 18px;
+}
+
+.power-route__head p:not(.section-kicker) {
+    color: var(--text-light-muted);
+    font-weight: 650;
+}
+
+/* rail без общего фона */
+.power-route__rail {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+    padding: 18px 0 34px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+}
+
+/* тонкая линия позади отдельных карточек */
+.power-route__rail::before {
+    content: "";
+    position: absolute;
+    right: 8%;
+    bottom: 10px;
+    left: 8%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 99px;
+}
+
+.power-route__rail::after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    left: 8%;
+    width: 18%;
+    height: 2px;
+    background: var(--accent-lime-yellow);
+    border-radius: 99px;
+    animation: routeLineSeparated 5.5s ease-in-out infinite;
+}
+
+/* отдельные карточки */
+.power-route-card {
+    position: relative;
+    isolation: isolate;
+    min-height: 245px;
+    padding: 26px 22px 30px;
+    overflow: hidden;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 24px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition:
+        transform var(--transition),
+        background var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+/* небольшое смещение, чтобы не было скучной ровной сетки */
+.power-route-card:nth-child(2) {
+    transform: translateY(18px);
+}
+
+.power-route-card:nth-child(3) {
+    transform: translateY(-8px);
+}
+
+.power-route-card:nth-child(4) {
+    transform: translateY(14px);
+}
+
+.power-route-card:hover {
+    background: rgba(255, 255, 255, 0.085);
+    border-color: rgba(246, 247, 126, 0.42);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.32);
+    transform: translateY(-8px);
+}
+
+.power-route-card:nth-child(2):hover,
+.power-route-card:nth-child(4):hover {
+    transform: translateY(8px);
+}
+
+.power-route-card:nth-child(3):hover {
+    transform: translateY(-18px);
+}
+
+.power-route-card::before {
+    content: "";
+    position: absolute;
+    right: -46px;
+    bottom: -54px;
+    z-index: -1;
+    width: 150px;
+    height: 150px;
+    background: var(--accent-lime-yellow);
+    border-radius: 50%;
+    opacity: 0.08;
+    transition:
+        transform var(--transition-slow),
+        opacity var(--transition);
+}
+
+.power-route-card:hover::before {
+    opacity: 0.18;
+    transform: scale(1.18);
+}
+
+/* точка под каждой карточкой */
+.power-route-card::after {
+    content: "";
+    position: absolute;
+    bottom: -29px;
+    left: 28px;
+    z-index: 3;
+    width: 13px;
+    height: 13px;
+    background: var(--accent-lime-yellow);
+    border: 3px solid var(--color-black);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(246, 247, 126, 0.14);
+}
+
+.power-route-card__number {
+    display: inline-flex;
+    margin-bottom: 42px;
+    color: var(--accent-lime-yellow);
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-style: italic;
+    font-weight: 900;
+    line-height: 0.9;
+    transform: skewX(-8deg);
+}
+
+.power-route-card i,
+.power-route-card svg {
+    position: absolute;
+    top: 24px;
+    right: 22px;
+    width: 42px;
+    height: 42px;
+    color: var(--accent-eco-green);
+    stroke-width: 1.55;
+}
+
+.power-route-card h3 {
+    max-width: 180px;
+    margin-bottom: 10px;
+    color: var(--text-light);
+    font-size: clamp(1.45rem, 2.2vw, 2rem);
+}
+
+.power-route-card p {
+    color: var(--text-light-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+/* последняя карточка акцентная, но отдельно */
+.power-route-card--accent {
+    color: var(--color-black);
+    background: var(--accent-lime-yellow);
+    border-color: rgba(5, 5, 5, 0.12);
+    box-shadow:
+        0 7px 0 rgba(5, 5, 5, 0.16),
+        0 28px 76px rgba(0, 0, 0, 0.32);
+}
+
+.power-route-card--accent h3,
+.power-route-card--accent p,
+.power-route-card--accent .power-route-card__number {
+    color: var(--color-black);
+}
+
+.power-route-card--accent i,
+.power-route-card--accent svg {
+    color: var(--color-black);
+}
+
+.power-route-card--accent::before {
+    background: var(--color-black);
+    opacity: 0.08;
+}
+
+.power-route-card--accent::after {
+    background: var(--color-black);
+    border-color: var(--accent-lime-yellow);
+    box-shadow: 0 0 0 5px rgba(246, 247, 126, 0.22);
+}
+
+.power-route-card--accent:hover {
+    background: var(--accent-lime-yellow-hover);
+    border-color: rgba(5, 5, 5, 0.18);
+}
+
+@keyframes routeLineSeparated {
+
+    0%,
+    18% {
+        width: 16%;
+    }
+
+    42% {
+        width: 38%;
+    }
+
+    68% {
+        width: 58%;
+    }
+
+    100% {
+        width: 84%;
+    }
+}
+
+@media (max-width: 1180px) {
+    .power-route__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .power-route__head {
+        max-width: 760px;
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    .power-route__head .section-kicker {
+        justify-content: center;
+    }
+
+    .power-route__head .section-kicker::before {
+        display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .power-route__rail {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        padding: 10px 2px 34px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .power-route__rail::-webkit-scrollbar {
+        display: none;
+    }
+
+    .power-route-card,
+    .power-route-card:nth-child(2),
+    .power-route-card:nth-child(3),
+    .power-route-card:nth-child(4) {
+        min-width: 260px;
+        transform: none;
+        scroll-snap-align: start;
+    }
+
+    .power-route-card:hover,
+    .power-route-card:nth-child(2):hover,
+    .power-route-card:nth-child(3):hover,
+    .power-route-card:nth-child(4):hover {
+        transform: translateY(-5px);
+    }
+
+    .power-route__rail::before {
+        left: 22px;
+        right: 22px;
+    }
+
+    .power-route__rail::after {
+        left: 22px;
+    }
+}
+
+@media (max-width: 520px) {
+    .power-route__head {
+        text-align: left;
+    }
+
+    .power-route__head .section-kicker {
+        justify-content: flex-start;
+    }
+
+    .power-route__head .section-kicker::before {
+        display: block;
+    }
+
+    .power-route-card {
+        min-width: 245px;
+        min-height: 235px;
+        padding: 24px 20px 28px;
+        border-radius: 21px;
+    }
+
+    .power-route-card__number {
+        margin-bottom: 38px;
+    }
+}
