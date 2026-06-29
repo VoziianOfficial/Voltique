@@ -477,3 +477,261 @@
         width: 100%;
     }
 }
+
+
+.review-marquee-board {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 38px 0 34px;
+    color: var(--text-light);
+    background: var(--color-black);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.review-marquee-board::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    opacity: 0.55;
+}
+
+.review-marquee-board::after {
+    content: "";
+    position: absolute;
+    right: clamp(20px, 6vw, 90px);
+    top: 50%;
+    z-index: 0;
+    width: clamp(140px, 18vw, 260px);
+    height: clamp(140px, 18vw, 260px);
+    border: 1px solid rgba(246, 247, 126, 0.24);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.review-marquee-board__top,
+.review-marquee-board__bottom {
+    position: relative;
+    overflow: hidden;
+}
+
+.review-marquee-board__top::before,
+.review-marquee-board__top::after,
+.review-marquee-board__bottom::before,
+.review-marquee-board__bottom::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+    width: clamp(54px, 10vw, 170px);
+    pointer-events: none;
+}
+
+.review-marquee-board__top::before,
+.review-marquee-board__bottom::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-black), transparent);
+}
+
+.review-marquee-board__top::after,
+.review-marquee-board__bottom::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-black), transparent);
+}
+
+.review-marquee-board__track {
+    display: flex;
+    width: max-content;
+}
+
+.review-marquee-board__group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+
+.review-marquee-board__track--large {
+    animation: reviewMarqueeLarge 38s linear infinite;
+}
+
+.review-marquee-board__track--large .review-marquee-board__group {
+    gap: clamp(26px, 4vw, 66px);
+    padding-right: clamp(26px, 4vw, 66px);
+}
+
+.review-marquee-board__track--large span {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.54);
+    font-family: var(--font-display);
+    font-size: clamp(4.4rem, 10vw, 11rem);
+    font-style: italic;
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: skewX(-8deg);
+}
+
+.review-marquee-board__track--large span:nth-child(3n) {
+    -webkit-text-stroke-color: rgba(246, 247, 126, 0.78);
+}
+
+.review-marquee-board__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(220px, 0.36fr) minmax(0, 0.74fr);
+    gap: clamp(18px, 4vw, 56px);
+    align-items: center;
+    margin: 24px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.review-marquee-board__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    padding: 10px 14px;
+    color: var(--color-black);
+    background: var(--accent-lime-yellow);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.review-marquee-board__label i,
+.review-marquee-board__label svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-black);
+}
+
+.review-marquee-board__content p {
+    max-width: 900px;
+    margin: 0;
+    color: var(--text-light);
+    font-size: clamp(1.2rem, 2.2vw, 2rem);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.review-marquee-board__track--small {
+    animation: reviewMarqueeSmall 30s linear infinite reverse;
+}
+
+.review-marquee-board:hover .review-marquee-board__track {
+    animation-play-state: paused;
+}
+
+.review-marquee-board__track--small .review-marquee-board__group {
+    gap: 12px;
+    padding-right: 12px;
+}
+
+.review-marquee-board__track--small span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 10px 16px;
+    white-space: nowrap;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.065);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 850;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+.review-marquee-board__track--small span:nth-child(even) {
+    border-color: rgba(93, 142, 58, 0.5);
+}
+
+.review-marquee-board__track--small span:nth-child(3n) {
+    color: var(--color-black);
+    background: var(--accent-lime-yellow);
+    border-color: rgba(246, 247, 126, 0.5);
+}
+
+.review-marquee-board__track--small i,
+.review-marquee-board__track--small svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    color: var(--accent-lime-yellow);
+    stroke-width: 1.8;
+}
+
+.review-marquee-board__track--small span:nth-child(3n) i,
+.review-marquee-board__track--small span:nth-child(3n) svg {
+    color: var(--color-black);
+}
+
+@keyframes reviewMarqueeLarge {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes reviewMarqueeSmall {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 900px) {
+    .review-marquee-board {
+        padding: 30px 0 28px;
+    }
+
+    .review-marquee-board__content {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin: 18px 0;
+    }
+
+    .review-marquee-board__track--large {
+        animation-duration: 28s;
+    }
+
+    .review-marquee-board__track--large span {
+        font-size: clamp(3.4rem, 18vw, 6rem);
+    }
+
+    .review-marquee-board__content p {
+        font-size: clamp(1.08rem, 5vw, 1.45rem);
+    }
+
+    .review-marquee-board__track--small {
+        animation-duration: 24s;
+    }
+
+    .review-marquee-board__track--small span {
+        min-height: 43px;
+        padding: 9px 13px;
+        font-size: 0.78rem;
+    }
+}
