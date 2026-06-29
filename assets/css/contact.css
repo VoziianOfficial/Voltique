@@ -118,10 +118,12 @@
 
 .contact-actions-card,
 .contact-options__photo {
-    height: 420px;
+    height: 540px;
 }
 
 .contact-actions-card {
+    display: flex;
+    flex-direction: column;
     padding: clamp(24px, 4vw, 38px);
     background: var(--color-white);
     border: 1px solid var(--border-light);
@@ -134,10 +136,40 @@
     font-size: clamp(1.7rem, 3vw, 2.6rem);
 }
 
+.contact-actions-card__text {
+    margin-bottom: 22px;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
 .contact-actions-card ul {
     display: grid;
     gap: 14px;
     list-style: none;
+}
+
+.contact-actions-card__note {
+    margin-top: auto;
+    padding: 18px 20px;
+    background: linear-gradient(180deg, rgba(246, 247, 126, 0.22) 0%, rgba(93, 142, 58, 0.1) 100%);
+    border: 1px solid rgba(93, 142, 58, 0.18);
+    border-radius: 18px;
+}
+
+.contact-actions-card__note strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    font-size: 0.92rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+}
+
+.contact-actions-card__note p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.94rem;
+    line-height: 1.6;
 }
 
 .contact-actions-card li {
@@ -405,7 +437,7 @@
 
     .contact-actions-card,
     .contact-options__photo {
-        height: 360px;
+        height: 460px;
     }
 }
 
@@ -436,7 +468,7 @@
 
     .contact-actions-card,
     .contact-options__photo {
-        height: 310px;
+        height: 400px;
         border-radius: 22px;
     }
 
@@ -489,6 +521,11 @@
 
     .contact-actions-card {
         padding: 22px;
+    }
+
+    .contact-actions-card__note {
+        padding: 16px 16px 15px;
+        border-radius: 16px;
     }
 
     .contact-actions-card li {
