@@ -198,6 +198,212 @@
         });
     };
 
+    const replaceStringTokens = (value, pairs) => {
+        if (typeof value !== 'string' || !value || !pairs.length) return value;
+
+        return pairs.reduce((result, pair) => {
+            const [from, to] = pair;
+
+            if (!from || to === undefined || to === null || from === String(to)) {
+                return result;
+            }
+
+            return result.split(from).join(String(to));
+        }, value);
+    };
+
+    const getGlobalReplacementPairs = () => {
+        const brandName = getValue('brand.name', 'Voltique');
+        const companyName = getValue('company.name', getValue('company.legalName', brandName));
+        const legalName = getValue('company.legalName', companyName);
+        const companyId = getValue('company.companyId', 'VQ-ELECTRIC-2048');
+        const address = getValue('company.address', 'USA Service Area');
+        const serviceArea = getValue(
+            'company.serviceArea',
+            'Electrical provider matching across selected local service areas'
+        );
+        const phoneRaw = normalizePhone(getValue('contact.phoneRaw', '+18885550186'));
+        const phoneDisplay = getValue('contact.phoneDisplay', '(888) 555-0186');
+        const email = getValue('contact.email', 'hello@voltique.com');
+        const footerCopyright = getValue('footer.copyright', `© 2026 ${brandName}. All rights reserved.`);
+
+        return [
+            ['Voltique', brandName],
+            ['VQ-ELECTRIC-2048', companyId],
+            ['USA Service Area', address],
+            ['Electrical provider matching across selected local service areas', serviceArea],
+            ['(888) 555-0186', phoneDisplay],
+            ['+18885550186', phoneRaw],
+            ['hello@voltique.com', email],
+            ['© 2026 Voltique. All rights reserved.', footerCopyright],
+            ['Voltique Request Desk', getValue('form.recipientLabel', `${brandName} Request Desk`)],
+            ['Voltique electrical provider matching logo', getValue('brand.logoAlt', `${brandName} logo`)]
+        ].filter(([from, to]) => from && to !== undefined && to !== null);
+    };
+
+    const updateTextNodesFromConfig = () => {
+        const pairs = getGlobalReplacementPairs();
+
+        if (!pairs.length || !document.body) return;
+
+        const blockedSelectors = 'script, style, noscript, textarea, svg, canvas';
+
+        const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode(node) {
+                    const parent = node.parentElement;
+
+                    if (!parent || parent.closest(blockedSelectors)) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    if (!node.nodeValue || !node.nodeValue.trim()) {
+                        return NodeFilter.FILTER_SKIP;
+                    }
+
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const textNodes = [];
+
+        while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+        }
+
+        textNodes.forEach((node) => {
+            const nextValue = replaceStringTokens(node.nodeValue, pairs);
+
+            if (nextValue !== node.nodeValue) {
+                node.nodeValue = nextValue;
+            }
+        });
+    };
+
+    const updateAttributesFromConfig = () => {
+        const pairs = getGlobalReplacementPairs();
+
+        if (!pairs.length) return;
+
+        const attrsToUpdate = [
+            'title',
+            'content',
+            'alt',
+            'aria-label',
+            'aria-description',
+            'placeholder',
+            'value',
+            'data-alt',
+            'data-step-title',
+            'data-step-text'
+        ];
+
+        qsa('*').forEach((node) => {
+            if (node.matches('script, style, noscript')) return;
+
+            attrsToUpdate.forEach((attr) => {
+                if (!node.hasAttribute(attr)) return;
+
+                const currentValue = node.getAttribute(attr);
+                const nextValue = replaceStringTokens(currentValue, pairs);
+
+                if (nextValue !== currentValue) {
+                    node.setAttribute(attr, nextValue);
+                }
+            });
+        });
+
+        document.title = replaceStringTokens(document.title, pairs);
+    };
+
+    const updateDirectConfigTargets = () => {
+        const brandName = getValue('brand.name');
+        const companyName = getValue('company.name', getValue('company.legalName', brandName));
+        const legalName = getValue('company.legalName', companyName);
+        const companyId = getValue('company.companyId');
+        const address = getValue('company.address');
+        const serviceArea = getValue('company.serviceArea');
+        const phoneRaw = normalizePhone(getValue('contact.phoneRaw'));
+        const phoneDisplay = getValue('contact.phoneDisplay');
+        const email = getValue('contact.email');
+        const lastUpdated = getValue('legal.lastUpdated', 'June 2026');
+
+        const directTargets = [
+            ['[data-brand-name]', brandName],
+            ['[data-company-name]', companyName],
+            ['[data-company-legal-name]', legalName],
+            ['[data-company-address]', address],
+            ['[data-address]', address],
+            ['[data-company-id]', companyId],
+            ['[data-service-area]', serviceArea],
+            ['[data-contact-phone]', phoneDisplay],
+            ['[data-phone-display]', phoneDisplay],
+            ['[data-contact-email]', email],
+            ['[data-email]', email],
+            ['[data-last-updated]', lastUpdated],
+            ['[data-short-disclaimer]', getValue('legal.shortDisclaimer')],
+            ['[data-full-disclaimer]', getValue('legal.fullDisclaimer')],
+            ['[data-footer-description]', getValue('footer.description')],
+            ['[data-footer-copyright]', getValue('footer.copyright')]
+        ];
+
+        directTargets.forEach(([selector, value]) => {
+            if (value === undefined || value === null) return;
+
+            qsa(selector).forEach((node) => {
+                node.textContent = value;
+            });
+        });
+
+        qsa('a[href^="tel:"], [data-phone-link]').forEach((node) => {
+            if (phoneRaw) {
+                node.setAttribute('href', `tel:${phoneRaw}`);
+            }
+
+            const phoneTextNode = qs('[data-config="contact.phoneDisplay"], [data-phone], p, span', node);
+
+            if (phoneDisplay && phoneTextNode && phoneTextNode.textContent.trim().match(/^\(?\d|^\+\d/)) {
+                phoneTextNode.textContent = phoneDisplay;
+            }
+        });
+
+        qsa('a[href^="mailto:"], [data-email-link]').forEach((node) => {
+            if (email) {
+                node.setAttribute('href', `mailto:${email}`);
+            }
+
+            const emailTextNode = qs('[data-config="contact.email"], [data-email], p, span', node);
+
+            if (email && emailTextNode && emailTextNode.textContent.trim().includes('@')) {
+                emailTextNode.textContent = email;
+            }
+        });
+
+        qsa('[data-address-link]').forEach((node) => {
+            if (!address) return;
+
+            node.setAttribute(
+                'href',
+                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+            );
+        });
+
+        qsa('form[data-contact-form]').forEach((form) => {
+            const endpoint = getValue('form.endpoint', 'contact.php');
+
+            if (endpoint) {
+                form.setAttribute('action', endpoint);
+            }
+        });
+
+        qsa('input[name="sourcePage"]').forEach((input) => {
+            input.value = window.location.href;
+        });
+    };
+
     const setDocumentData = () => {
         qsa('[data-config]').forEach((node) => {
             const key = node.getAttribute('data-config');
@@ -226,36 +432,9 @@
             }
         });
 
-        qsa('[data-phone-link]').forEach((node) => {
-            const phoneRaw = normalizePhone(getValue('contact.phoneRaw'));
-
-            if (phoneRaw) {
-                node.setAttribute('href', `tel:${phoneRaw}`);
-            }
-        });
-
-        qsa('[data-email-link]').forEach((node) => {
-            const email = getValue('contact.email');
-
-            if (email) {
-                node.setAttribute('href', `mailto:${email}`);
-            }
-        });
-
-        qsa('[data-address-link]').forEach((node) => {
-            const address = getValue('company.address');
-
-            if (address) {
-                node.setAttribute(
-                    'href',
-                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-                );
-            }
-        });
-
-        qsa('input[name="sourcePage"]').forEach((input) => {
-            input.value = window.location.href;
-        });
+        updateDirectConfigTargets();
+        updateTextNodesFromConfig();
+        updateAttributesFromConfig();
     };
 
     const buildPreHeader = () => {
@@ -1411,7 +1590,14 @@
             },
             refreshUi: (options = {}) => {
                 scheduleUiRefresh(options);
-            }
+            },
+            syncConfig: () => {
+                getConfig();
+                setDocumentData();
+                scheduleUiRefresh({
+                    hardAos: true
+                });
+            },
         };
     };
 

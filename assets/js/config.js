@@ -9,6 +9,7 @@ window.SiteConfig = {
     },
 
     company: {
+        name: 'Voltique',
         legalName: 'Voltique',
         companyId: 'VQ-ELECTRIC-2048',
         address: 'USA Service Area',
