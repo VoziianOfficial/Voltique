@@ -481,7 +481,6 @@ h4 {
     background: var(--accent-lime-yellow);
     border: 1px solid rgba(5, 5, 5, 0.1);
     border-radius: 12px;
-    box-shadow: 0 4px 0 rgba(5, 5, 5, 0.22);
     transition:
         transform var(--transition),
         background var(--transition),
