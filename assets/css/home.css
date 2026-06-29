@@ -1216,3 +1216,49 @@
         margin-bottom: 38px;
     }
 }
+
+/* ==============================
+   Comparison Factors Mobile Row
+============================== */
+
+@media (max-width: 768px) {
+    .comparison-factors__grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 4px 2px 14px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-factors__grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .factor-card {
+        flex: 0 0 185px;
+        min-width: 185px;
+        min-height: 130px;
+        scroll-snap-align: start;
+    }
+
+    .factor-card i,
+    .factor-card svg {
+        width: 34px;
+        height: 34px;
+    }
+
+    .comparison-factors__photo {
+        margin-top: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .factor-card {
+        flex-basis: 165px;
+        min-width: 165px;
+        min-height: 120px;
+    }
+}
