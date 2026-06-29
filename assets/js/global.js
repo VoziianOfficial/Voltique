@@ -42,6 +42,15 @@
         return String(phone || '').replace(/[^\d+]/g, '');
     };
 
+    const toLucideComponentName = (value) => {
+        const camel = String(value ?? '').replace(
+            /^([A-Z])|[\s-_]+(\w)/g,
+            (match, first, next) => next ? next.toUpperCase() : first.toLowerCase()
+        );
+
+        return camel.charAt(0).toUpperCase() + camel.slice(1);
+    };
+
     const createIcon = (name) => {
         return `<i data-lucide="${escapeHtml(name)}" aria-hidden="true"></i>`;
     };
@@ -129,6 +138,30 @@
     };
 
     const refreshIcons = () => {
+        if (window.lucide && window.lucide.icons) {
+            qsa('[data-lucide]').forEach((element) => {
+                const iconName = element.getAttribute('data-lucide');
+
+                if (!iconName) return;
+
+                const componentName = toLucideComponentName(iconName);
+
+                if (componentName in window.lucide.icons) {
+                    return;
+                }
+
+                const fallback = element.getAttribute('data-lucide-fallback') || 'shield';
+                const fallbackComponentName = toLucideComponentName(fallback);
+
+                console.warn('Missing Lucide icon:', iconName, element);
+
+                if (fallbackComponentName in window.lucide.icons) {
+                    element.setAttribute('data-lucide', fallback);
+                    element.setAttribute('data-lucide-missing', iconName);
+                }
+            });
+        }
+
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
