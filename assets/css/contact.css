@@ -118,7 +118,7 @@
 
 .contact-actions-card,
 .contact-options__photo {
-    min-height: 420px;
+    height: 420px;
 }
 
 .contact-actions-card {
@@ -405,7 +405,7 @@
 
     .contact-actions-card,
     .contact-options__photo {
-        min-height: 360px;
+        height: 360px;
     }
 }
 
@@ -436,7 +436,7 @@
 
     .contact-actions-card,
     .contact-options__photo {
-        min-height: 310px;
+        height: 310px;
         border-radius: 22px;
     }
 
