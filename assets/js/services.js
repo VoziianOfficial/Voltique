@@ -183,6 +183,10 @@
                 </a>
             `).join('');
         });
+
+        window.Voltique.refreshUi?.({
+            hardAos: true
+        });
     };
 
     const initServicePageFromConfig = () => {
@@ -229,8 +233,9 @@
         if (!window.Voltique) return;
 
         window.setTimeout(() => {
-            window.Voltique.refreshIcons();
-            window.Voltique.refreshAos();
+            window.Voltique.refreshUi?.({
+                hardAos: true
+            });
         }, 120);
     };
 

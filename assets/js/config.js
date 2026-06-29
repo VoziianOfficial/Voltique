@@ -64,6 +64,16 @@ window.SiteConfig = {
             shortTitle: 'Electrical Repair',
             file: 'electrical-repair-troubleshooting.html',
             icon: 'wrench',
+            keywords: [
+                'repair',
+                'troubleshooting',
+                'troubleshoot',
+                'fault',
+                'outlet',
+                'breaker trip',
+                'diagnostic',
+                'flickering lights'
+            ],
             image: 'assets/images/service-1.jpg',
             heroHeading: 'Electrical Repair',
             heroText:
@@ -77,6 +87,15 @@ window.SiteConfig = {
             shortTitle: 'Panels & Breakers',
             file: 'electrical-panel-breaker-services.html',
             icon: 'square-activity',
+            keywords: [
+                'panel',
+                'breaker',
+                'service panel',
+                'subpanel',
+                'capacity',
+                'upgrade',
+                'load center'
+            ],
             image: 'assets/images/service-2.jpg',
             heroHeading: 'Panel Options',
             heroText:
@@ -90,6 +109,15 @@ window.SiteConfig = {
             shortTitle: 'Wiring & Rewiring',
             file: 'wiring-rewiring-services.html',
             icon: 'cable',
+            keywords: [
+                'wiring',
+                'rewiring',
+                'rewire',
+                'new wire',
+                'circuits',
+                'cable',
+                'rough-in'
+            ],
             image: 'assets/images/service-3.jpg',
             heroHeading: 'Wiring Requests',
             heroText:
@@ -103,6 +131,15 @@ window.SiteConfig = {
             shortTitle: 'Lighting & Fixtures',
             file: 'lighting-fixture-installation.html',
             icon: 'lightbulb',
+            keywords: [
+                'lighting',
+                'lights',
+                'fixture',
+                'fixtures',
+                'recessed',
+                'ceiling light',
+                'installation'
+            ],
             image: 'assets/images/service-4.jpg',
             heroHeading: 'Lighting Projects',
             heroText:
@@ -116,6 +153,15 @@ window.SiteConfig = {
             shortTitle: 'EV Chargers',
             file: 'ev-charger-installation.html',
             icon: 'battery-charging',
+            keywords: [
+                'ev',
+                'charger',
+                'charging',
+                'electric vehicle',
+                'level 2',
+                'garage charger',
+                'home charging'
+            ],
             image: 'assets/images/service-5.jpg',
             heroHeading: 'EV Charger Matching',
             heroText:
@@ -129,6 +175,14 @@ window.SiteConfig = {
             shortTitle: 'Backup Power',
             file: 'generator-backup-power.html',
             icon: 'zap',
+            keywords: [
+                'backup',
+                'generator',
+                'standby power',
+                'emergency power',
+                'transfer switch',
+                'whole home backup'
+            ],
             image: 'assets/images/service-6.jpg',
             heroHeading: 'Backup Power Options',
             heroText:

@@ -1,10 +1,23 @@
 'use strict';
 
 (function () {
-    const config = window.SiteConfig || {};
+    let config = window.SiteConfig || {};
 
     const qs = (selector, scope = document) => scope.querySelector(selector);
     const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+    const requestFrame = window.requestAnimationFrame
+        ? window.requestAnimationFrame.bind(window)
+        : (callback) => window.setTimeout(callback, 16);
+    const cancelFrame = window.cancelAnimationFrame
+        ? window.cancelAnimationFrame.bind(window)
+        : window.clearTimeout.bind(window);
+
+    let uiRefreshFrame = 0;
+
+    const getConfig = () => {
+        config = window.SiteConfig || config || {};
+        return config;
+    };
 
     const getValue = (path, fallback = '') => {
         return path.split('.').reduce((acc, key) => {
@@ -13,7 +26,7 @@
             }
 
             return undefined;
-        }, config) ?? fallback;
+        }, getConfig()) ?? fallback;
     };
 
     const escapeHtml = (value) => {
@@ -39,11 +52,117 @@
     };
 
     const getServiceById = (id) => {
-        return (config.services || []).find((service) => service.id === id);
+        return (getConfig().services || []).find((service) => service.id === id);
     };
 
     const getServiceByFile = (file) => {
-        return (config.services || []).find((service) => service.file === file);
+        return (getConfig().services || []).find((service) => service.file === file);
+    };
+
+    const normalizeSearchText = (value) => {
+        return String(value ?? '')
+            .toLowerCase()
+            .replace(/\.html\b/g, ' ')
+            .replace(/&/g, ' and ')
+            .replace(/[-_/]+/g, ' ')
+            .replace(/[^a-z0-9\s]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    };
+
+    const getFileStem = (value) => {
+        return String(value ?? '')
+            .toLowerCase()
+            .replace(/\.html$/i, '')
+            .trim();
+    };
+
+    const shouldDisableAos = () => {
+        return window.innerWidth <= 991
+            || Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+
+    const setAosMode = () => {
+        const disable = shouldDisableAos();
+        document.documentElement.classList.toggle('aos-disabled', disable);
+        document.documentElement.classList.toggle('aos-enabled', !disable);
+        return disable;
+    };
+
+    const ensureAosVisibility = () => {
+        const elements = qsa('[data-aos]');
+        const disable = setAosMode();
+        const isAosReady = document.documentElement.classList.contains('aos-ready');
+
+        if (!elements.length) return;
+
+        if (disable) {
+            elements.forEach((element) => {
+                element.classList.add('aos-init', 'aos-animate');
+            });
+
+            return;
+        }
+
+        if (!window.AOS) {
+            if (!isAosReady) return;
+
+            elements.forEach((element) => {
+                element.classList.add('aos-init', 'aos-animate');
+            });
+
+            return;
+        }
+
+        elements.forEach((element) => {
+            if (!element.classList.contains('aos-init')) {
+                element.classList.add('aos-init');
+            }
+
+            const rect = element.getBoundingClientRect();
+            const isVisible = rect.top <= window.innerHeight * 0.92 && rect.bottom >= 0;
+
+            if (isVisible) {
+                element.classList.add('aos-animate');
+            }
+        });
+    };
+
+    const refreshIcons = () => {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
+    };
+
+    const refreshAos = (hard = false) => {
+        const disable = setAosMode();
+
+        if (disable || !window.AOS || typeof window.AOS.refresh !== 'function') {
+            ensureAosVisibility();
+            return;
+        }
+
+        if (hard && typeof window.AOS.refreshHard === 'function') {
+            window.AOS.refreshHard();
+        } else {
+            window.AOS.refresh();
+        }
+
+        ensureAosVisibility();
+    };
+
+    const scheduleUiRefresh = (options = {}) => {
+        const { hardAos = false } = options;
+
+        if (uiRefreshFrame) {
+            cancelFrame(uiRefreshFrame);
+        }
+
+        uiRefreshFrame = requestFrame(() => {
+            uiRefreshFrame = 0;
+            refreshIcons();
+            refreshAos(hardAos);
+        });
     };
 
     const setDocumentData = () => {
@@ -144,8 +263,9 @@
         if (!mount) return;
 
         const currentPage = getCurrentPage();
-        const navigation = config.navigation || [];
-        const services = config.services || [];
+        const activeConfig = getConfig();
+        const navigation = activeConfig.navigation || [];
+        const services = activeConfig.services || [];
 
         const navMarkup = navigation.map((item) => {
             const isCurrent = currentPage === item.url;
@@ -217,14 +337,19 @@
                 </div>
             </div>
         `;
+
+        scheduleUiRefresh({
+            hardAos: true
+        });
     };
 
     const buildMobileMenu = () => {
         const mount = qs('[data-mobile-menu]');
         if (!mount) return;
 
-        const navigation = config.navigation || [];
-        const services = config.services || [];
+        const activeConfig = getConfig();
+        const navigation = activeConfig.navigation || [];
+        const services = activeConfig.services || [];
 
         mount.className = 'mobile-menu';
         mount.id = 'mobile-menu';
@@ -289,6 +414,10 @@
                 </p>
             </div>
         `;
+
+        scheduleUiRefresh({
+            hardAos: true
+        });
     };
 
     const openMobileMenu = () => {
@@ -344,9 +473,10 @@
         const mount = qs('[data-site-footer]');
         if (!mount) return;
 
-        const navigation = config.navigation || [];
-        const services = config.services || [];
-        const legalPages = config.legalPages || [];
+        const activeConfig = getConfig();
+        const navigation = activeConfig.navigation || [];
+        const services = activeConfig.services || [];
+        const legalPages = activeConfig.legalPages || [];
 
         mount.className = 'site-footer';
         mount.innerHTML = `
@@ -432,6 +562,10 @@
                 </div>
             </div>
         `;
+
+        scheduleUiRefresh({
+            hardAos: true
+        });
     };
 
     const buildCookieBanner = () => {
@@ -464,6 +598,10 @@
         if (!cookieChoice) {
             mount.classList.add('is-visible');
         }
+
+        scheduleUiRefresh({
+            hardAos: true
+        });
     };
 
     const bindCookieBanner = () => {
@@ -489,7 +627,7 @@
 
             select.innerHTML = `
                 <option value="">${escapeHtml(placeholder)}</option>
-                ${(config.services || []).map((service) => `
+                ${(getConfig().services || []).map((service) => `
                     <option value="${escapeHtml(service.title)}">${escapeHtml(service.title)}</option>
                 `).join('')}
             `;
@@ -551,64 +689,352 @@
     };
 
     const initFaqSearch = () => {
-        qsa('[data-faq-search]').forEach((form) => {
-            const input = qs('input', form);
-            const result = qs('[data-faq-search-result]', form.closest('.faq-shell') || document);
+        const forms = qsa('[data-faq-search]');
 
-            form.addEventListener('submit', (event) => {
-                event.preventDefault();
+        if (!forms.length) return;
 
-                if (!input) return;
+        const createSearchIndex = () => {
+            return (getConfig().services || []).map((service) => {
+                const keywords = Array.isArray(service.keywords) ? service.keywords : [];
+                const slug = getFileStem(service.file);
+                const primaryFields = [
+                    service.title,
+                    service.shortTitle,
+                    ...keywords
+                ].map(normalizeSearchText).filter(Boolean);
+                const secondaryFields = [
+                    service.description,
+                    service.heroText
+                ].map(normalizeSearchText).filter(Boolean);
+                const machineFields = [
+                    service.id,
+                    service.file,
+                    slug
+                ].map(normalizeSearchText).filter(Boolean);
+                const tokenFields = Array.from(new Set(
+                    [...primaryFields, ...machineFields]
+                        .flatMap((value) => value.split(' '))
+                        .filter(Boolean)
+                ));
 
-                const query = input.value.trim().toLowerCase();
+                return {
+                    service,
+                    primaryFields,
+                    secondaryFields,
+                    machineFields,
+                    tokenFields
+                };
+            });
+        };
 
-                if (!query) {
-                    if (result) {
-                        result.textContent = 'Type a service category to search.';
+        const getMatches = (rawQuery) => {
+            const query = normalizeSearchText(rawQuery);
+
+            if (!query) return [];
+
+            const matches = createSearchIndex().map((entry) => {
+                const findMatch = (fields) => {
+                    return fields
+                        .map((value, index) => ({
+                            index,
+                            position: value.indexOf(query),
+                            startsWith: value.startsWith(query)
+                        }))
+                        .filter((item) => item.position !== -1)
+                        .sort((a, b) => {
+                            if (a.startsWith !== b.startsWith) {
+                                return a.startsWith ? -1 : 1;
+                            }
+
+                            if (a.position !== b.position) {
+                                return a.position - b.position;
+                            }
+
+                            return a.index - b.index;
+                        })[0] || null;
+                };
+
+                const tokenMatch = entry.tokenFields.findIndex((token) => token.startsWith(query));
+                const primaryMatch = findMatch(entry.primaryFields);
+                const secondaryMatch = query.length >= 3
+                    ? findMatch(entry.secondaryFields)
+                    : null;
+                const machineMatch = findMatch(entry.machineFields);
+
+                let priority = Number.POSITIVE_INFINITY;
+                let fieldOrder = Number.POSITIVE_INFINITY;
+                let position = Number.POSITIVE_INFINITY;
+
+                if (primaryMatch?.startsWith) {
+                    priority = 1;
+                    fieldOrder = primaryMatch.index;
+                    position = primaryMatch.position;
+                } else if (tokenMatch !== -1) {
+                    priority = 1;
+                    fieldOrder = 100 + tokenMatch;
+                    position = 0;
+                } else if (primaryMatch) {
+                    priority = 2;
+                    fieldOrder = primaryMatch.index;
+                    position = primaryMatch.position;
+                } else if (secondaryMatch) {
+                    priority = 2;
+                    fieldOrder = 200 + secondaryMatch.index;
+                    position = secondaryMatch.position;
+                } else if (machineMatch) {
+                    priority = 3;
+                    fieldOrder = machineMatch.index;
+                    position = machineMatch.position;
+                }
+
+                return {
+                    entry,
+                    priority,
+                    fieldOrder,
+                    position
+                };
+            }).filter((match) => Number.isFinite(match.priority));
+
+            return matches
+                .sort((a, b) => {
+                    if (a.priority !== b.priority) {
+                        return a.priority - b.priority;
                     }
 
-                    return;
-                }
+                    if (a.position !== b.position) {
+                        return a.position - b.position;
+                    }
 
-                const matchedService = (config.services || []).find((service) => {
-                    const haystack = [
-                        service.title,
-                        service.shortTitle,
-                        service.description,
-                        service.heroText
-                    ].join(' ').toLowerCase();
+                    if (a.fieldOrder !== b.fieldOrder) {
+                        return a.fieldOrder - b.fieldOrder;
+                    }
 
-                    return haystack.includes(query);
+                    return a.entry.service.title.localeCompare(b.entry.service.title);
+                })
+                .slice(0, 6)
+                .map((match) => match.entry.service);
+        };
+
+        const setResultMessage = (node, message, isError = false) => {
+            if (!node) return;
+
+            node.textContent = message;
+            node.classList.toggle('is-error', Boolean(message) && isError);
+            node.classList.toggle('is-success', Boolean(message) && !isError);
+        };
+
+        const instances = forms.map((form, index) => {
+            const input = qs('input[type="search"], input', form);
+
+            if (!input) return null;
+
+            const shell = form.closest('.faq-shell') || form.parentElement || document;
+            const result = qs('[data-faq-search-result]', shell);
+            const suggestionsId = input.id
+                ? `${input.id}-suggestions`
+                : `faq-search-suggestions-${index + 1}`;
+            const listId = `${suggestionsId}-list`;
+            const panel = document.createElement('div');
+
+            panel.className = 'faq-search__suggestions';
+            panel.id = suggestionsId;
+            panel.hidden = true;
+            panel.innerHTML = `
+                <ul class="faq-search__suggestions-list" id="${escapeHtml(listId)}" role="listbox" aria-label="Suggested services"></ul>
+            `;
+
+            form.append(panel);
+
+            input.setAttribute('aria-autocomplete', 'list');
+            input.setAttribute('aria-controls', suggestionsId);
+            input.setAttribute('aria-expanded', 'false');
+            input.setAttribute('aria-haspopup', 'listbox');
+            input.setAttribute('autocomplete', 'off');
+
+            let activeIndex = -1;
+            let matches = [];
+
+            const list = qs('.faq-search__suggestions-list', panel);
+
+            const closeSuggestions = () => {
+                activeIndex = -1;
+                panel.hidden = true;
+                form.classList.remove('is-open');
+                input.setAttribute('aria-expanded', 'false');
+                input.removeAttribute('aria-activedescendant');
+            };
+
+            const updateActiveSuggestion = () => {
+                const links = qsa('.faq-search__suggestion-link', panel);
+
+                links.forEach((link, linkIndex) => {
+                    const isActive = linkIndex === activeIndex;
+                    link.classList.toggle('is-active', isActive);
+                    link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+
+                    if (isActive) {
+                        input.setAttribute('aria-activedescendant', link.id);
+                        link.scrollIntoView({
+                            block: 'nearest'
+                        });
+                    }
                 });
 
-                if (matchedService) {
-                    window.location.href = matchedService.file;
+                if (activeIndex < 0) {
+                    input.removeAttribute('aria-activedescendant');
+                }
+            };
+
+            const renderSuggestions = () => {
+                if (!list) return;
+
+                if (!matches.length) {
+                    closeSuggestions();
+                    scheduleUiRefresh();
                     return;
                 }
 
-                const partialService = (config.services || []).find((service) => {
-                    const words = query.split(/\s+/).filter(Boolean);
+                list.innerHTML = matches.map((service, serviceIndex) => `
+                    <li class="faq-search__suggestion-item">
+                        <a
+                            class="faq-search__suggestion-link"
+                            id="${escapeHtml(`${listId}-option-${serviceIndex}`)}"
+                            href="${escapeHtml(service.file)}"
+                            role="option"
+                            aria-selected="${serviceIndex === activeIndex ? 'true' : 'false'}"
+                            ${serviceIndex === activeIndex ? 'data-active="true"' : ''}
+                        >
+                            <span class="faq-search__suggestion-icon">
+                                ${createIcon(service.icon || 'zap')}
+                            </span>
+                            <span class="faq-search__suggestion-text">
+                                <strong>${escapeHtml(service.title)}</strong>
+                                <small>${escapeHtml(service.description || service.heroText || 'View this electrical service category.')}</small>
+                            </span>
+                        </a>
+                    </li>
+                `).join('');
 
-                    return words.some((word) => {
-                        const haystack = [
-                            service.title,
-                            service.shortTitle,
-                            service.description,
-                            service.heroText
-                        ].join(' ').toLowerCase();
+                panel.hidden = false;
+                form.classList.add('is-open');
+                input.setAttribute('aria-expanded', 'true');
+                updateActiveSuggestion();
+                scheduleUiRefresh();
+            };
 
-                        return haystack.includes(word);
-                    });
-                });
+            const runSearch = () => {
+                const query = input.value.trim();
 
-                if (partialService) {
-                    window.location.href = partialService.file;
+                if (!query) {
+                    matches = [];
+                    setResultMessage(result, '');
+                    closeSuggestions();
                     return;
                 }
 
-                if (result) {
-                    result.textContent = 'No exact service match found. You can still start a request from the contact page.';
+                matches = getMatches(query);
+                activeIndex = -1;
+                setResultMessage(result, '');
+                renderSuggestions();
+            };
+
+            input.addEventListener('input', runSearch);
+
+            input.addEventListener('focus', () => {
+                if (input.value.trim()) {
+                    runSearch();
                 }
+            });
+
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeSuggestions();
+                    return;
+                }
+
+                if (!matches.length) return;
+
+                if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    activeIndex = (activeIndex + 1) % matches.length;
+                    updateActiveSuggestion();
+                    return;
+                }
+
+                if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    activeIndex = activeIndex <= 0 ? matches.length - 1 : activeIndex - 1;
+                    updateActiveSuggestion();
+                    return;
+                }
+
+                if (event.key === 'Enter' && activeIndex >= 0) {
+                    event.preventDefault();
+                    window.location.href = matches[activeIndex].file;
+                }
+            });
+
+            form.addEventListener('submit', (event) => {
+                const query = input.value.trim();
+
+                if (!query) {
+                    event.preventDefault();
+                    closeSuggestions();
+                    setResultMessage(result, 'Type a service category to search.', true);
+                    return;
+                }
+
+                matches = getMatches(query);
+
+                if (matches.length) {
+                    event.preventDefault();
+                    window.location.href = matches[Math.max(activeIndex, 0)].file;
+                    return;
+                }
+
+                event.preventDefault();
+                closeSuggestions();
+                setResultMessage(
+                    result,
+                    'No matching service category found. Try terms like EV, panel, repair, wiring, lighting, backup, or generator.',
+                    true
+                );
+            });
+
+            form.addEventListener('reset', () => {
+                matches = [];
+                setResultMessage(result, '');
+                closeSuggestions();
+            });
+
+            return {
+                form,
+                input,
+                panel,
+                closeSuggestions
+            };
+        }).filter(Boolean);
+
+        if (!instances.length) return;
+
+        document.addEventListener('click', (event) => {
+            instances.forEach((instance) => {
+                if (
+                    instance.form.contains(event.target)
+                    || instance.panel.contains(event.target)
+                ) {
+                    return;
+                }
+
+                instance.closeSuggestions();
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+
+            instances.forEach((instance) => {
+                instance.closeSuggestions();
             });
         });
     };
@@ -696,9 +1122,9 @@
     };
 
     const initLibraries = () => {
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons();
-        }
+        getConfig();
+        refreshIcons();
+        setAosMode();
 
         if (window.AOS && typeof window.AOS.init === 'function') {
             window.AOS.init({
@@ -707,15 +1133,37 @@
                 offset: 80,
                 once: true,
                 mirror: false,
-                disable: () => window.innerWidth < 360
-            });
-
-            window.addEventListener('load', () => {
-                if (window.AOS && typeof window.AOS.refreshHard === 'function') {
-                    window.AOS.refreshHard();
-                }
+                disable: shouldDisableAos
             });
         }
+
+        document.documentElement.classList.add('aos-ready');
+        ensureAosVisibility();
+
+        window.addEventListener('load', () => {
+            scheduleUiRefresh({
+                hardAos: true
+            });
+        });
+
+        let resizeTimer = 0;
+
+        window.addEventListener('resize', () => {
+            window.clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(() => {
+                scheduleUiRefresh({
+                    hardAos: true
+                });
+            }, 120);
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                scheduleUiRefresh({
+                    hardAos: true
+                });
+            }
+        });
     };
 
     const buildSharedFaqSchema = () => {
@@ -769,6 +1217,8 @@
     };
 
     const boot = () => {
+        getConfig();
+
         buildPreHeader();
         buildHeader();
         buildMobileMenu();
@@ -801,14 +1251,13 @@
             escapeHtml,
             createIcon,
             refreshIcons: () => {
-                if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                    window.lucide.createIcons();
-                }
+                refreshIcons();
             },
-            refreshAos: () => {
-                if (window.AOS && typeof window.AOS.refreshHard === 'function') {
-                    window.AOS.refreshHard();
-                }
+            refreshAos: (hard = true) => {
+                refreshAos(hard);
+            },
+            refreshUi: (options = {}) => {
+                scheduleUiRefresh(options);
             }
         };
     };

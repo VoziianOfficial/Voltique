@@ -1292,6 +1292,7 @@ h4 {
 .faq-shell {
     display: grid;
     gap: 28px;
+    overflow: visible;
 }
 
 .faq-top {
@@ -1299,15 +1300,29 @@ h4 {
     grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.7fr);
     align-items: end;
     gap: 28px;
+    overflow: visible;
 }
 
 .faq-search {
-    display: flex;
+    position: relative;
+    z-index: 12;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 10px;
     padding: 8px;
     background: var(--color-white);
     border: 1px solid var(--border-light);
     border-radius: 16px;
+    overflow: visible;
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.faq-search:focus-within,
+.faq-search.is-open {
+    border-color: rgba(93, 142, 58, 0.38);
+    box-shadow: 0 16px 36px rgba(5, 5, 5, 0.08);
 }
 
 .faq-search input {
@@ -1322,6 +1337,104 @@ h4 {
 
 .faq-search button {
     flex: 0 0 auto;
+}
+
+.faq-search__suggestions {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    max-height: min(420px, 58vh);
+    padding: 10px;
+    overflow: auto;
+    background: linear-gradient(180deg, rgba(19, 22, 20, 0.98) 0%, rgba(5, 5, 5, 0.98) 100%);
+    border: 1px solid rgba(246, 247, 126, 0.16);
+    border-radius: 18px;
+    box-shadow: 0 22px 48px rgba(5, 5, 5, 0.26);
+}
+
+.faq-search__suggestions-list {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.faq-search__suggestion-item {
+    margin: 0;
+}
+
+.faq-search__suggestion-link {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    min-height: 68px;
+    padding: 12px 13px;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition),
+        color var(--transition);
+}
+
+.faq-search__suggestion-link:hover,
+.faq-search__suggestion-link:focus-visible,
+.faq-search__suggestion-link.is-active {
+    color: var(--color-white);
+    background: rgba(93, 142, 58, 0.16);
+    border-color: rgba(246, 247, 126, 0.34);
+    transform: translateY(-1px);
+}
+
+.faq-search__suggestion-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    color: var(--color-black);
+    background: linear-gradient(135deg, var(--accent-lime-yellow), #d3e254);
+    border-radius: 14px;
+    box-shadow: inset 0 -1px 0 rgba(5, 5, 5, 0.14);
+}
+
+.faq-search__suggestion-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.faq-search__suggestion-text {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.faq-search__suggestion-text strong {
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 0.01em;
+}
+
+.faq-search__suggestion-text small {
+    display: -webkit-box;
+    overflow: hidden;
+    color: rgba(241, 242, 236, 0.78);
+    font-size: 0.82rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+html.aos-disabled [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition-property: none !important;
 }
 
 .faq-description {
@@ -1594,6 +1707,14 @@ h4 {
 .form-note {
     color: var(--text-muted);
     font-size: 0.86rem;
+}
+
+.form-note.is-error {
+    color: #8b2f2f;
+}
+
+.form-note.is-success {
+    color: #2e5a17;
 }
 
 .form-message {
@@ -1916,8 +2037,11 @@ h4 {
         grid-column: 1 / -1;
     }
 
+    html.aos-disabled [data-aos],
     [data-aos] {
+        opacity: 1 !important;
         transform: none !important;
+        transition-property: none !important;
     }
 }
 
@@ -1984,6 +2108,32 @@ h4 {
     .page-hero__photo-wrap {
         width: min(82vw, 390px);
         padding: 10px;
+    }
+
+    .faq-search {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-search button {
+        width: 100%;
+    }
+
+    .faq-search__suggestions {
+        top: calc(100% + 8px);
+        max-height: min(360px, 54vh);
+        padding: 8px;
+    }
+
+    .faq-search__suggestion-link {
+        grid-template-columns: 42px minmax(0, 1fr);
+        min-height: 64px;
+        padding: 11px 12px;
+    }
+
+    .faq-search__suggestion-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
     }
 
     .page-hero__photo {
