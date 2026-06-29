@@ -1,0 +1,507 @@
+/* ==============================
+   Contact Hero
+============================== */
+
+.contact-hero {
+    background: var(--color-matte-gray);
+}
+
+/* ==============================
+   Section 2: Contact Options
+============================== */
+
+.contact-options {
+    padding-top: 86px;
+}
+
+.contact-circles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 3vw, 34px);
+    max-width: 1040px;
+    margin: 42px auto 0;
+}
+
+.contact-circle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    min-height: 300px;
+    aspect-ratio: 1;
+    padding: 34px;
+    color: var(--text-dark);
+    text-align: center;
+    border: 2px solid rgba(17, 17, 17, 0.12);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.34);
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.contact-circle::before {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    border-radius: 50%;
+    transition:
+        transform var(--transition),
+        border-color var(--transition);
+}
+
+.contact-circle:hover {
+    background: rgba(246, 247, 126, 0.24);
+    border-color: rgba(93, 142, 58, 0.72);
+    transform: translateY(-6px);
+}
+
+.contact-circle:hover::before {
+    border-color: rgba(246, 247, 126, 0.8);
+    transform: scale(0.96);
+}
+
+.contact-circle i,
+.contact-circle svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+    color: var(--accent-eco-green);
+    stroke-width: 1.7;
+    transition:
+        color var(--transition),
+        transform var(--transition);
+}
+
+.contact-circle:hover i,
+.contact-circle:hover svg {
+    color: var(--color-black);
+    transform: rotate(-4deg) scale(1.08);
+}
+
+.contact-circle h3 {
+    margin-bottom: 8px;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+
+.contact-circle p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.contact-options__text {
+    max-width: 1040px;
+    margin: 34px auto 0;
+    padding: 24px 28px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.46);
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 22px;
+    text-align: center;
+}
+
+.contact-options__text p {
+    max-width: 940px;
+    margin-inline: auto;
+    font-size: 1.02rem;
+}
+
+.contact-options__cards {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.contact-actions-card,
+.contact-options__photo {
+    min-height: 420px;
+}
+
+.contact-actions-card {
+    padding: clamp(24px, 4vw, 38px);
+    background: var(--color-white);
+    border: 1px solid var(--border-light);
+    border-radius: 26px;
+    box-shadow: 0 22px 62px rgba(5, 5, 5, 0.08);
+}
+
+.contact-actions-card h3 {
+    margin-bottom: 22px;
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+}
+
+.contact-actions-card ul {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+}
+
+.contact-actions-card li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+    color: var(--text-muted);
+    font-weight: 750;
+}
+
+.contact-actions-card li i,
+.contact-actions-card li svg {
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    color: var(--accent-eco-green);
+}
+
+.contact-options__photo {
+    border-radius: 26px;
+}
+
+.contact-options__photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--photo-overlay);
+    pointer-events: none;
+}
+
+/* ==============================
+   Section 3: Request Form
+============================== */
+
+.request-form-section {
+    padding-top: 86px;
+}
+
+.request-form-section__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(420px, 0.82fr);
+    align-items: center;
+    gap: clamp(28px, 6vw, 82px);
+}
+
+.request-form-section__content {
+    max-width: 680px;
+}
+
+.request-form-section__content h2 {
+    margin-bottom: 18px;
+}
+
+.request-form-section__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.request-form-section__notice {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 13px;
+    margin-top: 26px;
+    padding: 18px;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.48);
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 18px;
+}
+
+.request-form-section__notice i,
+.request-form-section__notice svg {
+    width: 26px;
+    height: 26px;
+    color: var(--accent-eco-green);
+}
+
+.request-form-card {
+    padding: clamp(20px, 3vw, 30px);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 28px;
+    box-shadow:
+        0 8px 0 rgba(5, 5, 5, 0.08),
+        0 28px 70px rgba(5, 5, 5, 0.12);
+}
+
+.request-form .btn[type="submit"] {
+    width: 100%;
+}
+
+.request-form select {
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--accent-eco-green) 50%),
+        linear-gradient(135deg, var(--accent-eco-green) 50%, transparent 50%);
+    background-position:
+        calc(100% - 20px) 21px,
+        calc(100% - 14px) 21px;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+/* ==============================
+   Section 4: After Submit
+============================== */
+
+.after-submit__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 42px;
+}
+
+.after-card {
+    position: relative;
+    isolation: isolate;
+    min-height: 260px;
+    padding: 26px 22px;
+    overflow: hidden;
+    border: 1px solid rgba(17, 17, 17, 0.12);
+    border-radius: 24px;
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.after-card::before {
+    content: "";
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
+    left: 18px;
+    z-index: -1;
+    height: 4px;
+    background: currentColor;
+    border-radius: 99px;
+    opacity: 0.42;
+    transform: scaleX(0.26);
+    transform-origin: left;
+    transition:
+        transform var(--transition-slow),
+        opacity var(--transition);
+}
+
+.after-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 66px rgba(5, 5, 5, 0.13);
+}
+
+.after-card:hover::before {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.after-card i,
+.after-card svg {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    width: 44px;
+    height: 44px;
+    stroke-width: 1.65;
+    transition:
+        transform var(--transition),
+        color var(--transition);
+}
+
+.after-card:hover i,
+.after-card:hover svg {
+    transform: rotate(-5deg) scale(1.06);
+}
+
+.after-card h3 {
+    max-width: 78%;
+    margin-bottom: 14px;
+    font-size: clamp(1.3rem, 2vw, 1.85rem);
+}
+
+.after-card p {
+    color: inherit;
+    opacity: 0.78;
+    font-size: 0.95rem;
+}
+
+.after-card--yellow {
+    color: var(--color-black);
+    background: var(--accent-lime-yellow);
+}
+
+.after-card--green {
+    color: var(--text-light);
+    background: var(--accent-eco-green);
+}
+
+.after-card--dark {
+    color: var(--text-light);
+    background: var(--color-black);
+}
+
+.after-card--gray {
+    color: var(--text-dark);
+    background: var(--color-matte-gray);
+}
+
+/* ==============================
+   Responsive
+============================== */
+
+@media (max-width: 1180px) {
+    .contact-circles {
+        max-width: 900px;
+    }
+
+    .contact-circle {
+        min-height: 260px;
+    }
+
+    .after-submit__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .contact-options__cards,
+    .request-form-section__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .request-form-section__content {
+        max-width: 780px;
+        text-align: center;
+        margin-inline: auto;
+    }
+
+    .request-form-section__content .section-kicker {
+        justify-content: center;
+    }
+
+    .request-form-section__content .section-kicker::before {
+        display: none;
+    }
+
+    .request-form-section__actions {
+        justify-content: center;
+    }
+
+    .request-form-section__notice {
+        max-width: 680px;
+        margin-inline: auto;
+        margin-top: 26px;
+        text-align: left;
+    }
+
+    .request-form-card {
+        max-width: 760px;
+        width: 100%;
+        margin-inline: auto;
+    }
+
+    .contact-actions-card,
+    .contact-options__photo {
+        min-height: 360px;
+    }
+}
+
+@media (max-width: 900px) {
+    .contact-circles {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+    }
+
+    .contact-circle {
+        width: min(100%, 360px);
+        min-height: 0;
+        margin-inline: auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .contact-options,
+    .request-form-section {
+        padding-top: 68px;
+    }
+
+    .contact-options__text {
+        padding: 20px;
+        text-align: left;
+    }
+
+    .contact-actions-card,
+    .contact-options__photo {
+        min-height: 310px;
+        border-radius: 22px;
+    }
+
+    .request-form-section__notice {
+        grid-template-columns: 30px 1fr;
+    }
+
+    .after-submit__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .after-card {
+        min-height: 210px;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-circle {
+        width: min(100%, 320px);
+        padding: 28px;
+    }
+
+    .contact-circle i,
+    .contact-circle svg {
+        width: 42px;
+        height: 42px;
+    }
+
+    .request-form-section__content {
+        text-align: left;
+    }
+
+    .request-form-section__content .section-kicker {
+        justify-content: flex-start;
+    }
+
+    .request-form-section__content .section-kicker::before {
+        display: block;
+    }
+
+    .request-form-section__actions {
+        justify-content: flex-start;
+    }
+
+    .request-form-card {
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .contact-actions-card {
+        padding: 22px;
+    }
+
+    .contact-actions-card li {
+        grid-template-columns: 26px 1fr;
+    }
+
+    .after-card h3 {
+        max-width: 80%;
+    }
+
+    .after-card i,
+    .after-card svg {
+        width: 38px;
+        height: 38px;
+    }
+}

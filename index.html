@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltique | Electrical Provider Matching</title>
+
+    <meta name="description"
+        content="Voltique helps homeowners submit electrical request details and compare available local provider options through an independent provider-matching platform.">
+    <meta name="theme-color" content="#050505">
+
+    <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/home.css">
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="assets/js/config.js" defer></script>
+    <script src="assets/js/global.js" defer></script>
+    <script src="assets/js/home.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <div data-pre-header></div>
+    <header data-site-header></header>
+    <div data-mobile-menu></div>
+
+    <main id="main">
+        <!-- Section 1: Shared Homepage Hero -->
+        <section class="page-hero home-hero" aria-labelledby="home-hero-title">
+            <div class="container-wide">
+                <div class="page-hero__grid">
+                    <div class="page-hero__content" data-aos="fade-right">
+                        <p class="page-hero__eyebrow">Independent electrical request matching</p>
+
+                        <h1 class="display-heading" id="home-hero-title">
+                            Compare Electrical Options
+                        </h1>
+
+                        <p class="page-hero__text">
+                            Voltique helps you submit electrical project details and compare available local provider
+                            options without claiming to perform electrical work directly.
+                        </p>
+
+                        <div class="btn-row">
+                            <a class="btn btn--primary" href="contact.html">
+                                <span>Start Request</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
+
+                            <a class="btn btn--green" href="all-services.html">
+                                <span>View Services</span>
+                                <i data-lucide="list-checks" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="page-hero__photo-wrap" data-aos="zoom-in">
+                        <div class="page-hero__photo">
+                            <img src="assets/images/hero-home.jpg"
+                                alt="Modern electrical panel and clean home electrical environment" width="720"
+                                height="720">
+                        </div>
+
+                        <div class="page-hero__badge">
+                            <strong>Provider Matching</strong>
+                            <span>Final pricing and service terms come from participating providers.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-wave" aria-hidden="true">
+                <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
+                    <path fill="currentColor"
+                        d="M0,76 C160,126 282,128 430,88 C605,40 726,30 900,70 C1075,110 1248,122 1440,54 L1440,140 L0,140 Z">
+                    </path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Section 2: Popular Electrical Service Categories -->
+        <section class="home-popular section section--white" aria-labelledby="popular-services-title">
+            <h2 class="visually-hidden" id="popular-services-title">Popular Electrical Service Categories</h2>
+
+            <div class="container-wide">
+                <div class="home-popular__rows">
+                    <article class="home-popular__row" data-aos="fade-up">
+                        <a class="home-popular__circle circle-photo shine-surface"
+                            href="electrical-repair-troubleshooting.html"
+                            aria-label="View electrical repair request category">
+                            <img src="assets/images/service-1.jpg"
+                                alt="Outlet and electrical troubleshooting area in a modern home" width="560"
+                                height="560" loading="lazy">
+                        </a>
+
+                        <div class="home-popular__text">
+                            <p class="section-kicker">Common request path</p>
+                            <h3>Electrical Repair & Troubleshooting</h3>
+                            <p>
+                                Submit details about outlet concerns, breaker trips, flickering lights, or similar
+                                issues and compare available local provider options.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="home-popular__row home-popular__row--reverse" data-aos="fade-up">
+                        <div class="home-popular__text">
+                            <p class="section-kicker">Capacity and breaker needs</p>
+                            <h3>Electrical Panel & Breaker Services</h3>
+                            <p>
+                                Organize panel, breaker, and capacity-related request details before reviewing
+                                participating provider options and terms.
+                            </p>
+                        </div>
+
+                        <a class="home-popular__circle circle-photo shine-surface"
+                            href="electrical-panel-breaker-services.html"
+                            aria-label="View electrical panel and breaker request category">
+                            <img src="assets/images/service-2.jpg" alt="Electrical panel with labeled breaker switches"
+                                width="560" height="560" loading="lazy">
+                        </a>
+                    </article>
+
+                    <article class="home-popular__row" data-aos="fade-up">
+                        <a class="home-popular__circle circle-photo shine-surface" href="ev-charger-installation.html"
+                            aria-label="View EV charger request category">
+                            <img src="assets/images/service-5.jpg"
+                                alt="Electric vehicle charging equipment beside a home" width="560" height="560"
+                                loading="lazy">
+                        </a>
+
+                        <div class="home-popular__text">
+                            <p class="section-kicker">Modern power planning</p>
+                            <h3>EV Charger Installation</h3>
+                            <p>
+                                Start an EV charger request and compare provider options based on charger type,
+                                location, panel capacity, and project scope.
+                            </p>
+
+                            <div class="btn-row">
+                                <a class="btn btn--dark" href="ev-charger-installation.html">
+                                    <span>View Category</span>
+                                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Quick Electrical Request Navigation -->
+        <section class="quick-request section section--gray" aria-labelledby="quick-request-title">
+            <div class="container-wide">
+                <div class="center-head" data-aos="fade-up">
+                    <p class="section-kicker">Fast request routing</p>
+                    <h2 class="display-heading" id="quick-request-title">
+                        Quick Electrical Request Navigation
+                    </h2>
+                </div>
+
+                <div class="quick-request__grid">
+                    <a class="quick-request-card" href="electrical-repair-troubleshooting.html" data-aos="fade-up">
+                        <i data-lucide="activity" aria-hidden="true"></i>
+                        <h3>Repair</h3>
+                        <p>
+                            Share details about electrical concerns so repair-related provider options can be compared
+                            by category and area.
+                        </p>
+                    </a>
+
+                    <a class="quick-request-card" href="electrical-panel-breaker-services.html" data-aos="fade-up"
+                        data-aos-delay="60">
+                        <i data-lucide="square-activity" aria-hidden="true"></i>
+                        <h3>Panel</h3>
+                        <p>
+                            Organize panel capacity, breaker, and upgrade-related details before reviewing available
+                            provider options.
+                        </p>
+                    </a>
+
+                    <a class="quick-request-card" href="wiring-rewiring-services.html" data-aos="fade-up"
+                        data-aos-delay="120">
+                        <i data-lucide="cable" aria-hidden="true"></i>
+                        <h3>Wiring</h3>
+                        <p>
+                            Submit wiring or rewiring request details including access, room type, project purpose, and
+                            property needs.
+                        </p>
+                    </a>
+
+                    <a class="quick-request-card" href="lighting-fixture-installation.html" data-aos="fade-up">
+                        <i data-lucide="lightbulb" aria-hidden="true"></i>
+                        <h3>Lighting</h3>
+                        <p>
+                            Compare options for fixture, lighting layout, replacement, or upgrade-related request
+                            categories.
+                        </p>
+                    </a>
+
+                    <a class="quick-request-card" href="ev-charger-installation.html" data-aos="fade-up"
+                        data-aos-delay="60">
+                        <i data-lucide="battery-charging" aria-hidden="true"></i>
+                        <h3>EV Charger</h3>
+                        <p>
+                            Start an EV charging request with details about charger type, parking access, and electrical
+                            capacity.
+                        </p>
+                    </a>
+
+                    <a class="quick-request-card" href="generator-backup-power.html" data-aos="fade-up"
+                        data-aos-delay="120">
+                        <i data-lucide="zap" aria-hidden="true"></i>
+                        <h3>Backup Power</h3>
+                        <p>
+                            Review backup power request paths for generator, transfer, and power continuity planning
+                            categories.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Electrical Situation Selector -->
+        <section class="situation-selector section section--white" aria-labelledby="situation-title">
+            <div class="container-wide">
+                <div class="situation-selector__grid">
+                    <div class="situation-selector__photo image-frame" data-aos="fade-right">
+                        <img src="assets/images/service-1.jpg" alt="Electrical troubleshooting request category"
+                            width="720" height="720" loading="lazy" data-situation-image>
+                    </div>
+
+                    <div class="situation-selector__content" data-aos="fade-left">
+                        <p class="section-kicker">Choose a request situation</p>
+
+                        <h2 class="display-heading" id="situation-title">
+                            Match the Right Category
+                        </h2>
+
+                        <div class="situation-selector__options" role="tablist" aria-label="Electrical situations">
+                            <button class="situation-option is-active" type="button" role="tab" aria-selected="true"
+                                data-situation-option data-image="assets/images/service-1.jpg"
+                                data-alt="Electrical repair and troubleshooting request category">
+                                <i data-lucide="wrench" aria-hidden="true"></i>
+                                <span>
+                                    <strong>Something is not working</strong>
+                                    <small>Outlets, breaker trips, flickering lights, or unknown electrical
+                                        concerns.</small>
+                                </span>
+                            </button>
+
+                            <button class="situation-option" type="button" role="tab" aria-selected="false"
+                                data-situation-option data-image="assets/images/service-2.jpg"
+                                data-alt="Electrical panel and breaker request category">
+                                <i data-lucide="square-activity" aria-hidden="true"></i>
+                                <span>
+                                    <strong>Panel or breaker concern</strong>
+                                    <small>Capacity questions, breaker issues, or panel-related request details.</small>
+                                </span>
+                            </button>
+
+                            <button class="situation-option" type="button" role="tab" aria-selected="false"
+                                data-situation-option data-image="assets/images/service-4.jpg"
+                                data-alt="Lighting and fixture request category">
+                                <i data-lucide="lightbulb" aria-hidden="true"></i>
+                                <span>
+                                    <strong>Lighting or fixtures</strong>
+                                    <small>Fixture changes, lighting updates, layout needs, or room
+                                        improvements.</small>
+                                </span>
+                            </button>
+
+                            <button class="situation-option" type="button" role="tab" aria-selected="false"
+                                data-situation-option data-image="assets/images/service-5.jpg"
+                                data-alt="EV charger request category">
+                                <i data-lucide="battery-charging" aria-hidden="true"></i>
+                                <span>
+                                    <strong>EV or backup power</strong>
+                                    <small>EV charging, generator, or power planning request categories.</small>
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="btn-row">
+                            <a class="btn btn--primary" href="tel:+18885550186" data-phone-link>
+                                <span>Call Request Desk</span>
+                                <i data-lucide="phone" aria-hidden="true"></i>
+                            </a>
+
+                            <a class="btn btn--outline" href="all-services.html">
+                                <span>View All Services</span>
+                                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: How Voltique Matching Works -->
+        <section class="matching-works section section--soft" aria-labelledby="matching-title">
+            <div class="container-wide">
+                <div class="center-head" data-aos="fade-up">
+                    <p class="section-kicker">Simple comparison path</p>
+                    <h2 class="display-heading" id="matching-title">
+                        How Voltique Matching Works
+                    </h2>
+                </div>
+
+                <div class="matching-works__steps">
+                    <article class="matching-circle" data-aos="zoom-in">
+                        <i data-lucide="clipboard-list" aria-hidden="true"></i>
+                        <h3>Submit Details</h3>
+                        <p>
+                            Share the electrical category, location, and project notes through one request path.
+                        </p>
+                    </article>
+
+                    <article class="matching-circle" data-aos="zoom-in" data-aos-delay="80">
+                        <i data-lucide="git-compare-arrows" aria-hidden="true"></i>
+                        <h3>Compare Options</h3>
+                        <p>
+                            Available participating provider options may be identified based on your request details.
+                        </p>
+                    </article>
+
+                    <article class="matching-circle" data-aos="zoom-in" data-aos-delay="160">
+                        <i data-lucide="hand-pointer" aria-hidden="true"></i>
+                        <h3>Choose Next</h3>
+                        <p>
+                            You decide whether to continue after reviewing provider terms, availability, and fit.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Provider Comparison Factors -->
+        <section class="comparison-factors section section--white" aria-labelledby="comparison-title">
+            <div class="container-wide">
+                <div class="center-head" data-aos="fade-up">
+                    <p class="section-kicker">Review before choosing</p>
+                    <h2 class="display-heading" id="comparison-title">
+                        Provider Comparison Factors
+                    </h2>
+                </div>
+
+                <div class="comparison-factors__grid" data-factor-grid>
+                    <button class="factor-card is-active" type="button" data-factor-card
+                        data-image="assets/images/trust-photo.jpg"
+                        data-alt="Electrical planning and provider comparison discussion">
+                        <i data-lucide="calendar-check" aria-hidden="true"></i>
+                        <span>Availability</span>
+                    </button>
+
+                    <button class="factor-card" type="button" data-factor-card data-image="assets/images/service-3.jpg"
+                        data-alt="Wiring scope and electrical project detail">
+                        <i data-lucide="list-tree" aria-hidden="true"></i>
+                        <span>Project scope</span>
+                    </button>
+
+                    <button class="factor-card" type="button" data-factor-card data-image="assets/images/service-2.jpg"
+                        data-alt="Electrical panel pricing and service terms">
+                        <i data-lucide="receipt-text" aria-hidden="true"></i>
+                        <span>Pricing terms</span>
+                    </button>
+
+                    <button class="factor-card" type="button" data-factor-card data-image="assets/images/service-6.jpg"
+                        data-alt="Electrical provider credential review">
+                        <i data-lucide="badge-check" aria-hidden="true"></i>
+                        <span>License and insurance</span>
+                    </button>
+
+                    <button class="factor-card" type="button" data-factor-card data-image="assets/images/service-4.jpg"
+                        data-alt="Lighting and warranty detail review">
+                        <i data-lucide="shield-check" aria-hidden="true"></i>
+                        <span>Warranty details</span>
+                    </button>
+
+                    <button class="factor-card" type="button" data-factor-card data-image="assets/images/service-5.jpg"
+                        data-alt="EV charger provider service terms">
+                        <i data-lucide="file-check-2" aria-hidden="true"></i>
+                        <span>Provider terms</span>
+                    </button>
+                </div>
+
+                <a class="comparison-factors__photo photo-cover photo-overlay shine-surface" href="contact.html"
+                    data-factor-link aria-label="Start an electrical request">
+                    <img src="assets/images/trust-photo.jpg"
+                        alt="Electrical planning and provider comparison discussion" width="1440" height="460"
+                        loading="lazy" data-factor-image>
+                    <span>Use these details when comparing participating provider options.</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 7: Voltique Platform Clarity -->
+        <section class="platform-clarity section section--white" aria-labelledby="clarity-title">
+            <div class="container-wide">
+                <div class="platform-clarity__frame" data-aos="fade-up">
+                    <img class="platform-clarity__watermark" src="assets/images/logo.svg" alt="" width="260"
+                        height="220" loading="lazy">
+
+                    <div class="platform-clarity__content">
+                        <p class="section-kicker">Clear platform role</p>
+
+                        <h2 class="display-heading" id="clarity-title">
+                            Not a Direct Contractor
+                        </h2>
+
+                        <p>
+                            Voltique does not perform electrical work directly and does not represent itself as an
+                            electrician company, installer, repair company, inspector, manufacturer, or retailer.
+                            The platform helps users submit electrical request details and compare available local
+                            provider options. Final pricing, scheduling, warranties, licenses, insurance, service terms,
+                            and work quality are handled by participating independent providers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Photo-Based Trust / Request Confidence -->
+        <section class="request-confidence section section--soft" aria-labelledby="confidence-title">
+            <div class="container-wide">
+                <div class="request-confidence__grid">
+                    <div class="request-confidence__content" data-aos="fade-right">
+                        <p class="section-kicker">Confidence without fake claims</p>
+
+                        <h2 class="display-heading" id="confidence-title">
+                            Stay in Control
+                        </h2>
+
+                        <p class="lead">
+                            Voltique keeps the request path clear while leaving the final service decision with you and
+                            the participating provider you choose.
+                        </p>
+
+                        <ul class="confidence-list">
+                            <li>
+                                <i data-lucide="route" aria-hidden="true"></i>
+                                <span>Clear request path</span>
+                            </li>
+                            <li>
+                                <i data-lucide="map-pin" aria-hidden="true"></i>
+                                <span>Provider options may vary by area</span>
+                            </li>
+                            <li>
+                                <i data-lucide="hand" aria-hidden="true"></i>
+                                <span>User stays in control</span>
+                            </li>
+                            <li>
+                                <i data-lucide="file-text" aria-hidden="true"></i>
+                                <span>Final terms come from participating providers</span>
+                            </li>
+                            <li>
+                                <i data-lucide="shield-check" aria-hidden="true"></i>
+                                <span>Verify provider license and insurance</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="request-confidence__photo image-frame" data-aos="fade-left">
+                        <img src="assets/images/trust-photo.jpg"
+                            alt="Homeowner reviewing electrical project details before comparing provider options"
+                            width="760" height="620" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Homepage FAQ -->
+        <section class="faq-section section" aria-labelledby="home-faq-title">
+            <div class="container-wide">
+                <div class="faq-shell">
+                    <div class="faq-top">
+                        <div data-aos="fade-right">
+                            <p class="section-kicker">Common questions</p>
+                            <h2 class="display-heading" id="home-faq-title">
+                                Electrical Request FAQ
+                            </h2>
+                        </div>
+
+                        <form class="faq-search" data-faq-search data-aos="fade-left">
+                            <label class="visually-hidden" for="home-service-search">Search service category</label>
+                            <input id="home-service-search" type="search"
+                                placeholder="Search electrical service type..." autocomplete="off">
+                            <button class="btn btn--dark" type="submit">
+                                <span>Search</span>
+                                <i data-lucide="search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <p class="faq-description" data-aos="fade-up">
+                        These answers explain how Voltique works as an independent provider-matching platform and what
+                        homeowners should review before choosing whether to continue with a participating provider.
+                    </p>
+
+                    <p class="form-note" data-faq-search-result aria-live="polite"></p>
+
+                    <div class="faq-accordion" data-faq>
+                        <article class="faq-item is-open">
+                            <button class="faq-question" type="button">
+                                <span>How do I compare local electrical providers?</span>
+                                <i data-lucide="plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer__inner">
+                                    <p>
+                                        Start by submitting your request details through Voltique. Available provider
+                                        options may vary by location, project type, and participating provider
+                                        availability.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span>Does Voltique perform electrical work directly?</span>
+                                <i data-lucide="plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer__inner">
+                                    <p>
+                                        No. Voltique is an independent provider-matching platform. Electrical work,
+                                        scheduling, pricing, warranties, and service terms are handled by participating
+                                        independent providers.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span>What happens after I submit a request?</span>
+                                <i data-lucide="plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer__inner">
+                                    <p>
+                                        Your request details may be used to identify relevant provider options.
+                                        Participating providers may contact you with availability, pricing information,
+                                        and next steps.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span>What affects electrical project pricing?</span>
+                                <i data-lucide="plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer__inner">
+                                    <p>
+                                        Pricing can depend on project scope, property conditions, panel capacity,
+                                        access, materials, permits, timeline, and the provider terms you review.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span>How do I know if providers serve my area?</span>
+                                <i data-lucide="plus" aria-hidden="true"></i>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer__inner">
+                                    <p>
+                                        Service availability may vary by location. Participating providers are
+                                        responsible for confirming whether they serve your area and whether they can
+                                        handle the requested category.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <script data-faq-schema></script>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Shared Final CTA -->
+        <section class="final-cta" aria-labelledby="final-cta-title">
+            <div class="container-wide">
+                <div class="final-cta__card shine-surface" data-aos="fade-up">
+                    <div class="final-cta__content">
+                        <h2 class="display-heading" id="final-cta-title">
+                            Start Your Electrical Request
+                        </h2>
+
+                        <p>
+                            Submit project details and compare available local provider options through Voltique.
+                        </p>
+                    </div>
+
+                    <div class="final-cta__actions">
+                        <a class="btn btn--dark" href="contact.html">
+                            <span>Start Request</span>
+                            <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                        </a>
+
+                        <a class="btn btn--outline" href="all-services.html">
+                            <span>View Services</span>
+                            <i data-lucide="list-checks" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer data-site-footer></footer>
+    <div data-cookie-banner></div>
+</body>
+
+</html>
