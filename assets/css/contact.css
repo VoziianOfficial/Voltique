@@ -392,6 +392,7 @@
     .contact-options__cards,
     .request-form-section__grid {
         grid-template-columns: 1fr;
+        gap: 18px;
     }
 
     .request-form-section__content {
@@ -425,7 +426,11 @@
         margin-inline: auto;
     }
 
-    .contact-actions-card,
+    .contact-actions-card {
+        height: auto;
+        min-height: 0;
+    }
+
     .contact-options__photo {
         height: 460px;
     }
@@ -456,7 +461,12 @@
         text-align: left;
     }
 
-    .contact-actions-card,
+    .contact-actions-card {
+        height: auto;
+        min-height: 0;
+        border-radius: 22px;
+    }
+
     .contact-options__photo {
         height: 400px;
         border-radius: 22px;
@@ -513,9 +523,17 @@
         padding: 22px;
     }
 
+    .contact-options__cards {
+        gap: 16px;
+    }
+
     .contact-actions-card__note {
         padding: 16px 16px 15px;
         border-radius: 16px;
+    }
+
+    .contact-options__photo {
+        height: 320px;
     }
 
     .contact-actions-card li {
@@ -711,9 +729,6 @@
     }
 }
 
-/* ==============================
-   Electrical Checkpoint Marquee
-============================== */
 
 .checkpoint-marquee {
     position: relative;
