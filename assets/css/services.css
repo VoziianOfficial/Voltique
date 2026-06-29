@@ -1,14 +1,10 @@
-/* ==============================
-   Service Hero
-============================== */
+
 
 .service-hero {
     background: var(--color-soft-white);
 }
 
-/* ==============================
-   Section 2: Service Overview
-============================== */
+
 
 .service-overview {
     padding-top: 86px;
@@ -80,9 +76,7 @@
     color: var(--accent-eco-green);
 }
 
-/* ==============================
-   Section 3: Matching Process
-============================== */
+
 
 .service-process {
     overflow: hidden;
@@ -182,9 +176,7 @@
     margin-top: 14px;
 }
 
-/* ==============================
-   Section 4: Provider Factors
-============================== */
+
 
 .service-factors {
     position: relative;
@@ -287,9 +279,7 @@
     font-size: 0.94rem;
 }
 
-/* ==============================
-   Section 5: Deep Description + Stats
-============================== */
+
 
 .service-deep__top {
     display: grid;
@@ -374,9 +364,7 @@
     font-weight: 800;
 }
 
-/* ==============================
-   Section 6: FAQ + CTA Closing
-============================== */
+
 
 .service-closing {
     background: var(--color-soft-white);
@@ -387,9 +375,7 @@
     background: transparent;
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
     .service-factors__grid {
@@ -567,9 +553,7 @@
     }
 }
 
-/* ==============================
-   Provider Review Matrix
-============================== */
+
 
 .provider-review-matrix {
     overflow: hidden;
@@ -759,7 +743,7 @@
     }
 }
 
-/* Provider Review Matrix heading centered in one line */
+
 
 .provider-review-matrix__head {
     display: block;

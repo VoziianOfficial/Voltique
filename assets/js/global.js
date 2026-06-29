@@ -305,14 +305,27 @@
             const isServices = item.url === getValue('links.services');
 
             if (isServices) {
+                const dropdownId = 'services-dropdown';
+
                 return `
                     <li class="main-nav__item main-nav__item--services">
-                        <a class="main-nav__link" href="${escapeHtml(item.url)}" ${isCurrent ? 'aria-current="page"' : ''}>
+                        <a
+                            class="main-nav__link"
+                            href="${escapeHtml(item.url)}"
+                            aria-haspopup="menu"
+                            aria-controls="${dropdownId}"
+                            aria-expanded="false"
+                            ${isCurrent ? 'aria-current="page"' : ''}
+                        >
                             ${escapeHtml(item.label)}
                             ${createIcon('chevron-down')}
                         </a>
 
-                        <div class="services-dropdown" aria-label="Electrical service categories">
+                        <div
+                            class="services-dropdown"
+                            id="${dropdownId}"
+                            aria-label="Electrical service categories"
+                        >
                             <div class="services-dropdown__grid">
                                 ${services.map((service) => `
                                     <a class="services-dropdown__link" href="${escapeHtml(service.file)}">
@@ -1074,33 +1087,140 @@
 
     const initDropdownKeyboard = () => {
         const serviceItems = qsa('.main-nav__item--services');
+        const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const instances = [];
 
-        serviceItems.forEach((item) => {
+        const setItemOpen = (item, trigger, dropdown, open) => {
+            item.classList.toggle('is-open', open);
+            dropdown.classList.toggle('is-open', open);
+            trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+
+        const closeAll = (exceptItem = null) => {
+            instances.forEach((instance) => {
+                if (instance.item === exceptItem) return;
+
+                instance.clearOpenTimer();
+                instance.clearCloseTimer();
+                setItemOpen(instance.item, instance.trigger, instance.dropdown, false);
+            });
+        };
+
+        serviceItems.forEach((item, index) => {
             const dropdown = qs('.services-dropdown', item);
             const trigger = qs('.main-nav__link', item);
 
             if (!dropdown || !trigger) return;
 
+            if (!dropdown.id) {
+                dropdown.id = `services-dropdown-${index + 1}`;
+                trigger.setAttribute('aria-controls', dropdown.id);
+            }
+
+            let openTimer = 0;
+            let closeTimer = 0;
+
+            const clearOpenTimer = () => {
+                if (!openTimer) return;
+                window.clearTimeout(openTimer);
+                openTimer = 0;
+            };
+
+            const clearCloseTimer = () => {
+                if (!closeTimer) return;
+                window.clearTimeout(closeTimer);
+                closeTimer = 0;
+            };
+
+            const openDropdown = (delay = 60) => {
+                clearCloseTimer();
+                clearOpenTimer();
+
+                openTimer = window.setTimeout(() => {
+                    closeAll(item);
+                    setItemOpen(item, trigger, dropdown, true);
+                }, delay);
+            };
+
+            const closeDropdown = (delay = 210) => {
+                clearOpenTimer();
+                clearCloseTimer();
+
+                closeTimer = window.setTimeout(() => {
+                    setItemOpen(item, trigger, dropdown, false);
+                }, delay);
+            };
+
+            const cancelClose = () => {
+                clearCloseTimer();
+            };
+
+            item.addEventListener('mouseenter', () => {
+                if (!hoverMedia.matches) return;
+                openDropdown(50);
+            });
+
+            item.addEventListener('mouseleave', () => {
+                if (!hoverMedia.matches) return;
+                closeDropdown(210);
+            });
+
+            item.addEventListener('focusin', () => {
+                cancelClose();
+                openDropdown(0);
+            });
+
+            item.addEventListener('focusout', () => {
+                window.setTimeout(() => {
+                    if (item.contains(document.activeElement)) return;
+                    closeDropdown(160);
+                }, 0);
+            });
+
+            trigger.addEventListener('mouseenter', cancelClose);
+            dropdown.addEventListener('mouseenter', cancelClose);
+
             trigger.addEventListener('keydown', (event) => {
                 if (event.key === 'ArrowDown') {
                     event.preventDefault();
-                    dropdown.classList.add('is-open');
+                    openDropdown(0);
 
-                    const firstLink = qs('a', dropdown);
+                    const firstLink = qs('.services-dropdown__link', dropdown);
                     if (firstLink) firstLink.focus();
+                }
+
+                if (event.key === 'Escape') {
+                    closeDropdown(0);
                 }
             });
 
             dropdown.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
-                    dropdown.classList.remove('is-open');
+                    closeDropdown(0);
                     trigger.focus();
                 }
             });
 
-            item.addEventListener('mouseleave', () => {
-                dropdown.classList.remove('is-open');
+            instances.push({
+                item,
+                trigger,
+                dropdown,
+                clearOpenTimer,
+                clearCloseTimer
             });
+        });
+
+        document.addEventListener('click', (event) => {
+            const activeItem = event.target.closest('.main-nav__item--services');
+
+            if (activeItem) return;
+
+            closeAll();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            closeAll();
         });
     };
 

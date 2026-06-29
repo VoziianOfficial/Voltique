@@ -1,14 +1,10 @@
-/* ==============================
-   About Hero
-============================== */
+
 
 .about-hero {
     background: var(--color-soft-white);
 }
 
-/* ==============================
-   Section 2: Platform Story
-============================== */
+
 
 .about-story {
     padding-top: 86px;
@@ -55,9 +51,7 @@
     line-height: 1.7;
 }
 
-/* ==============================
-   Section 3: Independent Model
-============================== */
+
 
 .independent-model__grid {
     display: grid;
@@ -161,9 +155,7 @@
     color: var(--text-muted);
 }
 
-/* ==============================
-   Section 4: Organize Swiper
-============================== */
+
 
 .organize-section__grid {
     display: grid;
@@ -276,9 +268,7 @@
     margin-top: 14px;
 }
 
-/* ==============================
-   Section 5: Control Accordion
-============================== */
+
 
 .control-section {
     position: relative;
@@ -392,9 +382,7 @@
     padding-bottom: 20px;
 }
 
-/* ==============================
-   Section 6: Principles
-============================== */
+
 
 .principles-section__grid {
     display: grid;
@@ -456,9 +444,7 @@
     transform: rotate(-4deg) scale(1.04);
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
     .independent-model__grid {
@@ -662,9 +648,7 @@
     }
 }
 
-/* ==============================
-   Example Request Board
-============================== */
+
 
 .request-board {
     overflow: hidden;
@@ -896,9 +880,7 @@
     }
 }
 
-/* ==============================
-   About Proof Line
-============================== */
+
 
 .about-proof-line {
     padding: 46px 0;

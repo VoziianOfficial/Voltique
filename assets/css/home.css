@@ -2,9 +2,7 @@
     background: var(--color-soft-white);
 }
 
-/* ==============================
-   Section 2: Popular Services
-============================== */
+
 
 .home-popular {
     padding-top: 86px;
@@ -63,9 +61,7 @@
     margin-top: 24px;
 }
 
-/* ==============================
-   Section 3: Quick Request Cards
-============================== */
+
 
 .quick-request {
     overflow: hidden;
@@ -181,9 +177,7 @@
     font-size: 0.96rem;
 }
 
-/* ==============================
-   Section 4: Situation Selector
-============================== */
+
 
 .situation-selector__grid {
     display: grid;
@@ -287,9 +281,7 @@
     color: var(--text-light-muted);
 }
 
-/* ==============================
-   Section 5: Matching Works
-============================== */
+
 
 .matching-works__steps {
     display: grid;
@@ -367,9 +359,7 @@
     font-size: 0.94rem;
 }
 
-/* ==============================
-   Section 6: Comparison Factors
-============================== */
+
 
 .comparison-factors__grid {
     display: grid;
@@ -470,9 +460,7 @@
     font-weight: 800;
 }
 
-/* ==============================
-   Section 7: Platform Clarity
-============================== */
+
 
 .platform-clarity {
     padding-top: 72px;
@@ -515,9 +503,7 @@
     pointer-events: none;
 }
 
-/* ==============================
-   Section 8: Request Confidence
-============================== */
+
 
 .request-confidence__grid {
     display: grid;
@@ -588,9 +574,7 @@
     pointer-events: none;
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
     .quick-request__grid {
@@ -882,9 +866,7 @@
     }
 }
 
-/* ==============================
-   Electrical Decision Route — Separated Cards
-============================== */
+
 
 .power-route {
     position: relative;
@@ -915,7 +897,7 @@
     font-weight: 650;
 }
 
-/* rail без общего фона */
+
 .power-route__rail {
     position: relative;
     display: grid;
@@ -929,7 +911,7 @@
     overflow: visible;
 }
 
-/* тонкая линия позади отдельных карточек */
+
 .power-route__rail::before {
     content: "";
     position: absolute;
@@ -953,7 +935,7 @@
     animation: routeLineSeparated 5.5s ease-in-out infinite;
 }
 
-/* отдельные карточки */
+
 .power-route-card {
     position: relative;
     isolation: isolate;
@@ -974,7 +956,7 @@
         box-shadow var(--transition);
 }
 
-/* небольшое смещение, чтобы не было скучной ровной сетки */
+
 .power-route-card:nth-child(2) {
     transform: translateY(18px);
 }
@@ -1024,7 +1006,7 @@
     transform: scale(1.18);
 }
 
-/* точка под каждой карточкой */
+
 .power-route-card::after {
     content: "";
     position: absolute;
@@ -1075,7 +1057,7 @@
     line-height: 1.55;
 }
 
-/* последняя карточка акцентная, но отдельно */
+
 .power-route-card--accent {
     color: var(--color-black);
     background: var(--accent-lime-yellow);
@@ -1217,9 +1199,7 @@
     }
 }
 
-/* ==============================
-   Comparison Factors Mobile Row
-============================== */
+
 
 @media (max-width: 768px) {
     .comparison-factors__grid {
@@ -1263,9 +1243,7 @@
     }
 }
 
-/* ==============================
-   Electrical Review Ribbon
-============================== */
+
 
 .review-ribbon {
     padding: 34px 0;

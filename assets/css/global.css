@@ -48,9 +48,7 @@
     --transition-slow: 420ms ease;
 }
 
-/* ==============================
-   Reset / Base
-============================== */
+
 
 *,
 *::before,
@@ -152,9 +150,7 @@ p {
     outline-offset: 4px;
 }
 
-/* ==============================
-   Accessibility
-============================== */
+
 
 .skip-link {
     position: fixed;
@@ -186,9 +182,7 @@ p {
     border: 0 !important;
 }
 
-/* ==============================
-   Layout / Containers
-============================== */
+
 
 .section {
     position: relative;
@@ -234,9 +228,7 @@ p {
     margin-top: 28px;
 }
 
-/* ==============================
-   Typography
-============================== */
+
 
 h1,
 h2,
@@ -336,9 +328,7 @@ h4 {
     display: none;
 }
 
-/* ==============================
-   Buttons
-============================== */
+
 
 .btn-row {
     display: flex;
@@ -512,9 +502,7 @@ h4 {
     height: 20px;
 }
 
-/* ==============================
-   Global Pre-header
-============================== */
+
 
 .pre-header {
     position: relative;
@@ -559,9 +547,7 @@ h4 {
     color: var(--accent-eco-green);
 }
 
-/* ==============================
-   Header / Nav
-============================== */
+
 
 .site-header {
     position: sticky;
@@ -622,6 +608,20 @@ h4 {
     position: relative;
 }
 
+.main-nav__item--services {
+    z-index: 40;
+}
+
+.main-nav__item--services::after {
+    content: "";
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: transparent;
+}
+
 .main-nav__link {
     display: inline-flex;
     align-items: center;
@@ -654,6 +654,7 @@ h4 {
     position: absolute;
     top: calc(100% + 12px);
     left: 50%;
+    z-index: 80;
     width: min(720px, calc(100vw - 38px));
     padding: 18px;
     opacity: 0;
@@ -670,7 +671,7 @@ h4 {
         transform var(--transition);
 }
 
-.main-nav__item--services:hover .services-dropdown,
+.main-nav__item--services.is-open .services-dropdown,
 .main-nav__item--services:focus-within .services-dropdown,
 .services-dropdown.is-open {
     opacity: 1;
@@ -686,6 +687,7 @@ h4 {
 }
 
 .services-dropdown__link {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -705,11 +707,34 @@ h4 {
         color var(--transition);
 }
 
-.services-dropdown__link:hover {
+.services-dropdown__link::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 3px;
+    opacity: 0;
+    background: linear-gradient(180deg, var(--accent-lime-yellow), var(--accent-eco-green));
+    border-radius: 999px;
+    transition:
+        opacity var(--transition),
+        transform var(--transition);
+    transform: scaleY(0.65);
+}
+
+.services-dropdown__link:hover,
+.services-dropdown__link:focus-visible {
     color: var(--accent-lime-yellow);
     background: rgba(255, 255, 255, 0.075);
     border-color: rgba(246, 247, 126, 0.42);
     transform: translateY(-2px);
+}
+
+.services-dropdown__link:hover::before,
+.services-dropdown__link:focus-visible::before {
+    opacity: 1;
+    transform: scaleY(1);
 }
 
 .services-dropdown__link svg {
@@ -789,9 +814,7 @@ h4 {
     transform: rotate(-45deg);
 }
 
-/* ==============================
-   Mobile Menu
-============================== */
+
 
 .mobile-menu {
     position: fixed;
@@ -966,9 +989,7 @@ h4 {
     font-size: 0.82rem;
 }
 
-/* ==============================
-   Shared Hero
-============================== */
+
 
 .page-hero {
     position: relative;
@@ -1144,9 +1165,7 @@ h4 {
     color: var(--color-matte-gray);
 }
 
-/* ==============================
-   Shared Photo Utilities
-============================== */
+
 
 .photo-cover,
 .image-frame,
@@ -1210,9 +1229,7 @@ h4 {
     object-fit: cover;
 }
 
-/* ==============================
-   Shared Cards / Effects
-============================== */
+
 
 .card {
     position: relative;
@@ -1280,9 +1297,7 @@ h4 {
     transform: scaleX(1);
 }
 
-/* ==============================
-   Shared FAQ
-============================== */
+
 
 .faq-section {
     background: var(--color-soft-white);
@@ -1508,9 +1523,7 @@ html.aos-disabled [data-aos] {
     grid-template-rows: 1fr;
 }
 
-/* ==============================
-   Shared Final CTA
-============================== */
+
 
 .final-cta {
     background: var(--color-white);
@@ -1584,9 +1597,7 @@ html.aos-disabled [data-aos] {
     }
 }
 
-/* ==============================
-   Forms Base
-============================== */
+
 
 .form {
     display: grid;
@@ -1740,9 +1751,7 @@ html.aos-disabled [data-aos] {
     border: 1px solid rgba(180, 42, 42, 0.28);
 }
 
-/* ==============================
-   Footer
-============================== */
+
 
 .site-footer {
     color: var(--text-light);
@@ -1863,9 +1872,7 @@ html.aos-disabled [data-aos] {
     color: var(--accent-lime-yellow);
 }
 
-/* ==============================
-   Cookie Banner
-============================== */
+
 
 .cookie-banner {
     position: fixed;
@@ -1918,9 +1925,7 @@ html.aos-disabled [data-aos] {
     font-size: 0.8rem;
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
     .site-header__inner {
@@ -2279,9 +2284,7 @@ html.aos-disabled [data-aos] {
     }
 }
 
-/* ==============================
-   Reduced Motion
-============================== */
+
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -2295,9 +2298,7 @@ html.aos-disabled [data-aos] {
     }
 }
 
-/* ==============================
-   Sticky Pre-header + Header Fix
-============================== */
+
 
 .pre-header {
     position: fixed;

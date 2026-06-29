@@ -1,14 +1,10 @@
-/* ==============================
-   All Services Hero
-============================== */
+
 
 .services-hero {
     background: var(--color-soft-white);
 }
 
-/* ==============================
-   Section 2: Service Grid
-============================== */
+
 
 .service-grid {
     display: grid;
@@ -119,9 +115,7 @@
     opacity: 1;
 }
 
-/* ==============================
-   Section 3: Service Finder
-============================== */
+
 
 .service-finder__tabs {
     display: flex;
@@ -191,9 +185,7 @@
     font-weight: 800;
 }
 
-/* ==============================
-   Section 4: Residential Needs
-============================== */
+
 
 .residential-needs__grid {
     display: grid;
@@ -278,9 +270,7 @@
     font-size: 0.95rem;
 }
 
-/* ==============================
-   Section 5: Scope Slider
-============================== */
+
 
 .scope-slider {
     margin-top: 42px;
@@ -368,9 +358,7 @@
     margin-top: 14px;
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
 

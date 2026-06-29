@@ -2,17 +2,7 @@
 
 declare(strict_types=1);
 
-/*
-|--------------------------------------------------------------------------
-| Voltique Contact Form Backend
-|--------------------------------------------------------------------------
-| This form works only on a server with PHP support.
-| For local testing, run:
-| php -S localhost:8000
-|
-| Edit the constants below when changing recipient/company settings.
-|--------------------------------------------------------------------------
-*/
+
 
 header('Content-Type: application/json; charset=utf-8');
 

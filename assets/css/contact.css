@@ -1,14 +1,10 @@
-/* ==============================
-   Contact Hero
-============================== */
+
 
 .contact-hero {
     background: var(--color-matte-gray);
 }
 
-/* ==============================
-   Section 2: Contact Options
-============================== */
+
 
 .contact-options {
     padding-top: 86px;
@@ -201,9 +197,7 @@
     pointer-events: none;
 }
 
-/* ==============================
-   Section 3: Request Form
-============================== */
+
 
 .request-form-section {
     padding-top: 86px;
@@ -276,9 +270,7 @@
     background-repeat: no-repeat;
 }
 
-/* ==============================
-   Section 4: After Submit
-============================== */
+
 
 .after-submit__grid {
     display: grid;
@@ -379,9 +371,7 @@
     background: var(--color-matte-gray);
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1180px) {
     .contact-circles {
@@ -544,9 +534,7 @@
 }
 
 
-/* ==============================
-   Contact Detail Card — Equal Blocks
-============================== */
+
 
 .contact-detail-card {
     overflow: hidden;
@@ -559,7 +547,7 @@
     align-items: stretch;
 }
 
-/* большое квадратное фото */
+
 .contact-detail-card__photo {
     position: relative;
     overflow: hidden;
@@ -604,7 +592,7 @@
     transform: scale(1.045);
 }
 
-/* правый блок теперь такого же размера */
+
 .contact-detail-card__content {
     display: flex;
     flex-direction: column;

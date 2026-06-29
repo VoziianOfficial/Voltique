@@ -1,6 +1,4 @@
-/* ==============================
-   Legal Hero
-============================== */
+
 
 .legal-hero {
     min-height: 520px;
@@ -12,9 +10,7 @@
     max-width: 720px;
 }
 
-/* ==============================
-   Legal Page Layout
-============================== */
+
 
 .legal-page {
     background: var(--color-white);
@@ -246,9 +242,7 @@
     color: var(--accent-eco-green);
 }
 
-/* ==============================
-   Legal Link Cards
-============================== */
+
 
 .legal-related {
     display: grid;
@@ -306,9 +300,7 @@
     line-height: 1.5;
 }
 
-/* ==============================
-   Responsive
-============================== */
+
 
 @media (max-width: 1024px) {
     .legal-layout {
