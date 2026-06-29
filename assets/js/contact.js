@@ -149,10 +149,6 @@
         initContactForm();
         initInputStates();
 
-        if (window.Voltique) {
-            window.Voltique.refreshIcons();
-            window.Voltique.refreshAos();
-        }
     };
 
     if (document.readyState === 'loading') {

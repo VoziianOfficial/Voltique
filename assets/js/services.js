@@ -60,9 +60,6 @@
 
             updateSideText();
 
-            if (window.Voltique) {
-                window.Voltique.refreshAos();
-            }
         };
 
         const goTo = (nextIndex) => {
@@ -184,9 +181,7 @@
             `).join('');
         });
 
-        window.Voltique.refreshUi?.({
-            hardAos: true
-        });
+        window.Voltique.refreshUi?.();
     };
 
     const initServicePageFromConfig = () => {
@@ -229,28 +224,12 @@
         });
     };
 
-    const initFaqSchemaRefresh = () => {
-        if (!window.Voltique) return;
-
-        window.setTimeout(() => {
-            window.Voltique.refreshUi?.({
-                hardAos: true
-            });
-        }, 120);
-    };
-
     const boot = () => {
         initServicePageFromConfig();
         initServiceStepSlider();
         initServiceFactorMotion();
         initServiceStats();
         initRelatedServiceLinks();
-        initFaqSchemaRefresh();
-
-        if (window.Voltique) {
-            window.Voltique.refreshIcons();
-            window.Voltique.refreshAos();
-        }
     };
 
     if (document.readyState === 'loading') {

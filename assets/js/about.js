@@ -26,9 +26,6 @@
                 card.setAttribute('aria-hidden', cardIndex === index ? 'false' : 'true');
             });
 
-            if (window.Voltique) {
-                window.Voltique.refreshAos();
-            }
         };
 
         const goTo = (nextIndex) => {
@@ -151,10 +148,6 @@
         initControlAccordion();
         initModelCardMotion();
 
-        if (window.Voltique) {
-            window.Voltique.refreshIcons();
-            window.Voltique.refreshAos();
-        }
     };
 
     if (document.readyState === 'loading') {

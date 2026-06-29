@@ -5,15 +5,6 @@
 
     const qs = (selector, scope = document) => scope.querySelector(selector);
     const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
-    const requestFrame = window.requestAnimationFrame
-        ? window.requestAnimationFrame.bind(window)
-        : (callback) => window.setTimeout(callback, 16);
-    const cancelFrame = window.cancelAnimationFrame
-        ? window.cancelAnimationFrame.bind(window)
-        : window.clearTimeout.bind(window);
-
-    let uiRefreshFrame = 0;
-
     const getConfig = () => {
         config = window.SiteConfig || config || {};
         return config;
@@ -86,57 +77,6 @@
             .trim();
     };
 
-    const shouldDisableAos = () => {
-        return window.innerWidth <= 991
-            || Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    };
-
-    const setAosMode = () => {
-        const disable = shouldDisableAos();
-        document.documentElement.classList.toggle('aos-disabled', disable);
-        document.documentElement.classList.toggle('aos-enabled', !disable);
-        return disable;
-    };
-
-    const ensureAosVisibility = () => {
-        const elements = qsa('[data-aos]');
-        const disable = setAosMode();
-        const isAosReady = document.documentElement.classList.contains('aos-ready');
-
-        if (!elements.length) return;
-
-        if (disable) {
-            elements.forEach((element) => {
-                element.classList.add('aos-init', 'aos-animate');
-            });
-
-            return;
-        }
-
-        if (!window.AOS) {
-            if (!isAosReady) return;
-
-            elements.forEach((element) => {
-                element.classList.add('aos-init', 'aos-animate');
-            });
-
-            return;
-        }
-
-        elements.forEach((element) => {
-            if (!element.classList.contains('aos-init')) {
-                element.classList.add('aos-init');
-            }
-
-            const rect = element.getBoundingClientRect();
-            const isVisible = rect.top <= window.innerHeight * 0.92 && rect.bottom >= 0;
-
-            if (isVisible) {
-                element.classList.add('aos-animate');
-            }
-        });
-    };
-
     const refreshIcons = () => {
         if (window.lucide && window.lucide.icons) {
             qsa('[data-lucide]').forEach((element) => {
@@ -167,35 +107,35 @@
         }
     };
 
-    const refreshAos = (hard = false) => {
-        const disable = setAosMode();
+    const initAOS = () => {
+        if (!window.AOS || typeof window.AOS.init !== 'function') return;
 
-        if (disable || !window.AOS || typeof window.AOS.refresh !== 'function') {
-            ensureAosVisibility();
-            return;
-        }
-
-        if (hard && typeof window.AOS.refreshHard === 'function') {
-            window.AOS.refreshHard();
-        } else {
-            window.AOS.refresh();
-        }
-
-        ensureAosVisibility();
+        window.AOS.init({
+            once: true,
+            mirror: false,
+            duration: 700,
+            easing: 'ease-out-cubic',
+            offset: 80,
+            delay: 0,
+            anchorPlacement: 'top-bottom',
+            disable: () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        });
     };
 
-    const scheduleUiRefresh = (options = {}) => {
-        const { hardAos = false } = options;
+    const refreshAOS = () => {
+        if (!window.AOS || typeof window.AOS.refresh !== 'function') return;
 
-        if (uiRefreshFrame) {
-            cancelFrame(uiRefreshFrame);
+        window.AOS.refresh();
+    };
+
+    const refreshUi = (options = {}) => {
+        const { refreshAos = true } = options;
+
+        refreshIcons();
+
+        if (refreshAos) {
+            refreshAOS();
         }
-
-        uiRefreshFrame = requestFrame(() => {
-            uiRefreshFrame = 0;
-            refreshIcons();
-            refreshAos(hardAos);
-        });
     };
 
     const replaceStringTokens = (value, pairs) => {
@@ -563,9 +503,6 @@
             </div>
         `;
 
-        scheduleUiRefresh({
-            hardAos: true
-        });
     };
 
     const buildMobileMenu = () => {
@@ -640,9 +577,6 @@
             </div>
         `;
 
-        scheduleUiRefresh({
-            hardAos: true
-        });
     };
 
     const openMobileMenu = () => {
@@ -788,9 +722,6 @@
             </div>
         `;
 
-        scheduleUiRefresh({
-            hardAos: true
-        });
     };
 
     const buildCookieBanner = () => {
@@ -824,9 +755,6 @@
             mount.classList.add('is-visible');
         }
 
-        scheduleUiRefresh({
-            hardAos: true
-        });
     };
 
     const bindCookieBanner = () => {
@@ -1115,7 +1043,6 @@
 
                 if (!matches.length) {
                     closeSuggestions();
-                    scheduleUiRefresh();
                     return;
                 }
 
@@ -1144,7 +1071,7 @@
                 form.classList.add('is-open');
                 input.setAttribute('aria-expanded', 'true');
                 updateActiveSuggestion();
-                scheduleUiRefresh();
+                refreshIcons();
             };
 
             const runSearch = () => {
@@ -1454,47 +1381,15 @@
     };
 
     const initLibraries = () => {
-        getConfig();
         refreshIcons();
-        setAosMode();
+        initAOS();
 
-        if (window.AOS && typeof window.AOS.init === 'function') {
-            window.AOS.init({
-                duration: 720,
-                easing: 'ease-out-cubic',
-                offset: 80,
-                once: true,
-                mirror: false,
-                disable: shouldDisableAos
-            });
-        }
-
-        document.documentElement.classList.add('aos-ready');
-        ensureAosVisibility();
+        window.setTimeout(() => {
+            refreshAOS();
+        }, 150);
 
         window.addEventListener('load', () => {
-            scheduleUiRefresh({
-                hardAos: true
-            });
-        });
-
-        let resizeTimer = 0;
-
-        window.addEventListener('resize', () => {
-            window.clearTimeout(resizeTimer);
-            resizeTimer = window.setTimeout(() => {
-                scheduleUiRefresh({
-                    hardAos: true
-                });
-            }, 120);
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                scheduleUiRefresh({
-                    hardAos: true
-                });
-            }
+            refreshAOS();
         });
     };
 
@@ -1570,8 +1465,9 @@
         initCounterAnimation();
         buildSharedFaqSchema();
         initExternalLinkSafety();
-        initLibraries();
         initPageReadyClass();
+
+        initLibraries();
 
         window.Voltique = {
             config,
@@ -1585,19 +1481,17 @@
             refreshIcons: () => {
                 refreshIcons();
             },
-            refreshAos: (hard = true) => {
-                refreshAos(hard);
+            refreshAos: () => {
+                refreshAOS();
             },
             refreshUi: (options = {}) => {
-                scheduleUiRefresh(options);
+                refreshUi(options);
             },
             syncConfig: () => {
                 getConfig();
                 setDocumentData();
-                scheduleUiRefresh({
-                    hardAos: true
-                });
-            },
+                refreshUi();
+            }
         };
     };
 

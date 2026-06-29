@@ -60,7 +60,15 @@ html,
 body {
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
 }
 
 html {
@@ -77,6 +85,10 @@ body {
     background: var(--color-white);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+}
+
+[data-aos] {
+    backface-visibility: hidden;
 }
 
 body.menu-open {
@@ -1445,12 +1457,6 @@ h4 {
     -webkit-line-clamp: 2;
 }
 
-html.aos-disabled [data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition-property: none !important;
-}
-
 .faq-description {
     max-width: 980px;
     color: var(--text-muted);
@@ -2041,12 +2047,11 @@ html.aos-disabled [data-aos] {
         grid-column: 1 / -1;
     }
 
-    html.aos-disabled [data-aos],
-    [data-aos] {
-        opacity: 1 !important;
-        transform: none !important;
-        transition-property: none !important;
+    [data-aos="fade-left"],
+    [data-aos="fade-right"] {
+        transform: translate3d(0, 24px, 0) !important;
     }
+
 }
 
 @media (max-width: 768px) {
@@ -2295,6 +2300,17 @@ html.aos-disabled [data-aos] {
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.001ms !important;
+    }
+
+    [data-aos],
+    [data-aos][data-aos][data-aos-duration],
+    [data-aos][data-aos][data-aos-delay] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
     }
 }
 
