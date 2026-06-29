@@ -710,3 +710,123 @@
         left: 58px;
     }
 }
+
+/* ==============================
+   Electrical Checkpoint Marquee
+============================== */
+
+.checkpoint-marquee {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    padding: 16px 0;
+    color: var(--text-light);
+    background: var(--color-black);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.checkpoint-marquee::before,
+.checkpoint-marquee::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 3;
+    width: clamp(48px, 10vw, 160px);
+    pointer-events: none;
+}
+
+.checkpoint-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-black), transparent);
+}
+
+.checkpoint-marquee::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-black), transparent);
+}
+
+.checkpoint-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: checkpointMarquee 34s linear infinite;
+}
+
+.checkpoint-marquee:hover .checkpoint-marquee__track {
+    animation-play-state: paused;
+}
+
+.checkpoint-marquee__group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 12px;
+}
+
+.checkpoint-marquee span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 10px 16px;
+    white-space: nowrap;
+    color: var(--text-light);
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 850;
+    letter-spacing: 0.02em;
+    box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
+}
+
+.checkpoint-marquee span:nth-child(3n) {
+    color: var(--color-black);
+    background: var(--accent-lime-yellow);
+    border-color: rgba(246, 247, 126, 0.5);
+}
+
+.checkpoint-marquee span:nth-child(4n) {
+    border-color: rgba(93, 142, 58, 0.48);
+}
+
+.checkpoint-marquee i,
+.checkpoint-marquee svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    color: var(--accent-lime-yellow);
+    stroke-width: 1.8;
+}
+
+.checkpoint-marquee span:nth-child(3n) i,
+.checkpoint-marquee span:nth-child(3n) svg {
+    color: var(--color-black);
+}
+
+@keyframes checkpointMarquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .checkpoint-marquee {
+        padding: 13px 0;
+    }
+
+    .checkpoint-marquee__track {
+        animation-duration: 26s;
+    }
+
+    .checkpoint-marquee span {
+        min-height: 42px;
+        padding: 9px 13px;
+        font-size: 0.78rem;
+    }
+}
